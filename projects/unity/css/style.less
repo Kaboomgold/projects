@@ -1,0 +1,26 @@
+.code-list {
+    background-color: rgb(24, 24, 24);
+
+    ol {
+        color: white;
+        box-sizing: border-box;
+        counter-reset: number;
+
+        li {
+            border-bottom: 1px dashed #2f2f2f;
+            margin: 0px;
+            border-left: 3px solid #2f2f2f;
+            padding: 0px;
+            padding-left: 10px;
+            counter-increment: number;
+
+            p {
+                margin: 4px 0px;
+            }
+        }
+
+        li::marker {            
+            content: counter(number) "\a0";
+        }
+    }
+}

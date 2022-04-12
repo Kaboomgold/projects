@@ -1,0 +1,110 @@
+body, html {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header h1 {
+    font-size: 50px;
+    text-align: center;
+}
+
+#projects {
+    overflow: hidden;
+
+    .project {
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        transition: transform 1s, background-color 1s;
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.05, 1.05);
+            background-color: lightgray;
+            transition: transform 1s, background-color 1s;
+        }
+
+        div {
+            flex: 1;
+            padding: 10px;
+        }
+
+        div:not(div:first-child) {
+            border: 1px solid gray;
+            border-style: none none none solid;
+        }
+
+        .name {
+            text-align: center;
+        }
+
+        .description {
+            flex: 2;
+        }
+
+        > a {
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+/* Main Project Page Category Menu */
+.category-menu {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: rgba(199, 199, 199, 0.4);
+
+    > ul {
+        display: flex;
+        flex-direction: row;
+        padding: 0px;
+        margin: 0px;
+        list-style-type: none;
+
+        > li {
+            flex-basis: 150px;
+            text-align: center;
+
+            > a {
+                display: block;
+                padding: 10px 0px;
+                width: 100%;
+                color: black;
+                text-decoration: none;
+                transition: background-color 0.5s;
+
+                &.active {
+                    background-color: antiquewhite;
+                }
+
+                &:hover {
+                    background-color: lightgrey;
+                    transition: background-color 0.5s;
+                }
+            }
+        }
+    }
+}
+
+.pages {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow: hidden;
+    scroll-behavior: smooth;
+
+    .page {
+        min-width: 100%;
+
+        h1 {
+            text-align: center;
+        }
+    }
+}
