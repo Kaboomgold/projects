@@ -1,26 +1,108 @@
+
+// mixins
+.border-vertical {
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;
+}
+
+.reset-list {
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+// mixins
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.page.scripts {
+    .main-content {
+        padding: 20px;
+    }
+}
+
 .code-list {
     background-color: rgb(24, 24, 24);
+    margin: 0px;
 
     ol {
         color: white;
         box-sizing: border-box;
         counter-reset: number;
+        margin: 0px;
 
         li {
             border-bottom: 1px dashed #2f2f2f;
-            margin: 0px;
             border-left: 3px solid #2f2f2f;
-            padding: 0px;
+            margin: 0px;
+            padding: 3px 0px;
             padding-left: 10px;
             counter-increment: number;
 
             p {
-                margin: 4px 0px;
+                margin: 0px;
             }
         }
 
         li::marker {            
             content: counter(number) "\a0";
         }
+    }
+}
+
+ul.script-list {
+    .reset-list();
+
+    flex: 1;
+    max-width: 500px;
+
+    li {
+        padding: 5px 0px;
+        border-top: 1px solid black;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:last-of-type {
+            .border-vertical();
+        }
+
+        &.active {
+            background-color: darkgray;
+        }
+
+        p {
+            text-align: center;
+            margin: 0px;
+        }
+    }
+}
+
+.script {
+    flex: 5;
+    overflow: auto;
+    height: 500px;
+    box-shadow: 0px 0px 40px rgb(230, 230, 230) inset;
+    position: relative;
+
+    &::after {
+        .absolute-center();
+        content: "NO SCRIPT SELECTED";
+        z-index: -1;
+        font-size: 50px;
+        font-weight: bold;
+        color: gray;
+        text-shadow: 1px 1px 3px rgb(125, 125, 125);
     }
 }

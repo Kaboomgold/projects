@@ -17,15 +17,38 @@ class AjaxHandler {
 }
 
 const ajax_loc = './php/ajax/';
+const scriptsList = document.querySelector('.script-list');
 
-let colorized_scripts = [];
+generateScripts();
 
-AjaxHandler.Ajax_JSON_Request(`${ajax_loc}get-script-files.php`, json_scripts => {
-    const scripts = JSON.parse(json_scripts);
+function generateScripts() {
+    const listItems = [...scriptsList.children];
 
-    scripts.forEach(script => {
-        AjaxHandler.Ajax_JSON_Request(`${ajax_loc}get-colorized-script-html.php`, colorized_script => {
-            colorized_scripts.push(colorized_script);
-        }, { script_name: script });
+    listItems.forEach(listItem => {
+        listItem.addEventListener('click', e => {
+            getColorizedScript(listItem.textContent, colorized_script => {
+                addColorizedScript(colorized_script);
+            });
+
+            toggleItemInItems(listItems, listItem);
+        });
     });
-});
+}
+
+function toggleItemInItems(items, item, className = 'active') {
+    items.forEach(item => {
+        item.classList.remove('active');
+    })
+
+    item.classList.add('active');
+}
+
+function getColorizedScript(script_name, callback) {
+    AjaxHandler.Ajax_JSON_Request(`${ajax_loc}get-colorized-script-html.php`, colorized_script => {
+        callback(colorized_script);
+    }, { script_name: script_name });
+}
+
+function addColorizedScript(colorized_script) {
+    document.querySelector('.scripts .script').innerHTML = colorized_script;
+}
