@@ -5,29 +5,31 @@ import { AnimationAction } from './three.js-master/src/animation/AnimationAction
 import { OrbitControls } from './three.js-master/examples/jsm/controls/OrbitControls.js'
 
 class ModelView {
-    #model_url;
-    #scene;
-    #camera;
-    #renderer;
-    #domElement;
-    #width;
-    #height;
-    #controls;
+    #model_url = null;
+    #scene = null;
+    #camera = null;
+    #renderer = null;
+    #domElement = null;
+    #width = 100;
+    #height = 100;
+    #controls = null;
     #animeMixer = null;
     #animeAction = null;
     #animeActions = [];
     #clock = new THREE.Clock();
     #selectedAnimation = null;
+    #animation_names = [];
+    #on_model_loaded = null;
 
-    constructor(model_url, width, height) {
+    constructor(model_url, width, height, on_model_loaded) {
         this.#model_url = model_url;
         this.#width = width;
         this.#height = height;
+        this.#on_model_loaded = on_model_loaded;
 
         this.#loadModel();
         this.#Init();
         this.#createLightning();
-        this.#animate();
 
         this.#domElement = this.#renderer.domElement;
         this.#renderer.setSize( this.#width, this.#height );
@@ -35,12 +37,16 @@ class ModelView {
         this.#camera.position.z = 2;
         this.#camera.position.y = 1;
 
-        this.#controls.enableDamping = true;
+        this.#controls.enableDamping = false;
         this.#controls.target.set(0, 1, 0);
     }
 
     get domElement() {
         return this.#domElement;
+    }
+
+    get animationNames() {
+        return this.#animation_names;
     }
 
     #Init() {
@@ -68,14 +74,17 @@ class ModelView {
 
                 if(object.animations.length > 0) {
                     object.animations.forEach(animation => {
+                        this.#animation_names.push(animation.name);
+
                         const action = new AnimationAction(this.#animeMixer, animation, object);
                         action.loop = THREE.LoopRepeat;
-                        this.#animeActions.push(action);
+                        this.#animeActions.push({'name':animation.name, 'action':action});
                     });
 
-                    this.#animeActions[0].play();
-                    
+                    this.#animeActions[0].action.play();
                 }
+                
+                this.#on_model_loaded(this);
 
                 this.#scene.add(object);
             },
@@ -89,15 +98,14 @@ class ModelView {
     }
 
     playAnimation(animeName) {
-
         this.#animeActions.forEach(animationAction => {
             if(animationAction.name == animeName) {
 
                 if(this.#selectedAnimation != null) {
-                    this.#selectedAnimation.stop();
+                    this.#selectedAnimation.action.stop();
                 }
 
-                animationAction.play();
+                animationAction.action.play();
                 this.#selectedAnimation = animationAction;
             }
         });

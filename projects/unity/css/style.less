@@ -60,7 +60,7 @@
     }
 }
 
-ul.script-list {
+ul.script-list, ul.animation-menu{
     .reset-list();
 
     flex: 1;
@@ -89,6 +89,19 @@ ul.script-list {
     }
 }
 
+.model_viewer_container {
+    position: relative;
+    margin: 20px auto;
+}
+
+ul.animation-menu {
+    background-color: white;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+}
+
 .script {
     flex: 5;
     overflow: auto;
@@ -105,4 +118,9 @@ ul.script-list {
         color: gray;
         text-shadow: 1px 1px 3px rgb(125, 125, 125);
     }
+}
+
+.object-selection {
+    display: block;
+    margin: 0 auto;
 }

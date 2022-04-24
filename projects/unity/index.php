@@ -35,7 +35,7 @@
                 <a href="#scripts-page" class="active">scripts</a>
             </li>
             <li>
-                <a href="#3d-assets-page">3D assets</a>
+                <a href="#three-d-assets-page">3D assets</a>
             </li>
         </ul>
     </nav>
@@ -43,8 +43,8 @@
     <main>
         <div class="pages">
             <?php 
-                foreach ($files as $fileName) {
-                    include_once './pages/'.$fileName;
+                foreach ($pages as $pageName) {
+                    include_once './pages/'.$pageName;
                 } 
             ?>
         </div>

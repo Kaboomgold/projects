@@ -4,8 +4,9 @@ include_once './php/colorizer/colorizer.php';
 
 define('SCRIPTS_DIR', './src/scripts');
 
-$files = FileHandler::GetFilesFromDir('./pages');
+$pages = FileHandler::GetFilesFromDir('./pages');
 $scripts = FileHandler::GetFilesFromDir(SCRIPTS_DIR);
+$model_names = FileHandler::GetFilesFromDir('./src/models');
 
 $cp = new ScriptColorizer();
 

@@ -94,8 +94,6 @@ class ScriptsViewer extends Module {
 
 generateScripts();
 
-
-
 function generateScripts() {
     const scriptsList = document.querySelector('.script-list');
     const listItems = [...scriptsList.children];
@@ -132,9 +130,40 @@ function addColorizedScript(colorized_script) {
 class ModelViewer {
     #mv = null;
     #viewer = document.createElement('div');
+    
+    constructor() {
+        this.#viewer.className = 'model_viewer_container';
+    }
 
     viewModel(path_to_model) {
-        this.#mv = new ModelView(path_to_model, 300, 300);
+        this.#viewer.innerHTML = '';
+        this.#viewer.style.width = `${700}px`;
+
+        this.#mv = new ModelView(path_to_model, 700, 700, obj => {
+
+            const old_ul = document.querySelector('.animation-menu');
+            if(old_ul != null) {
+                old_ul.remove();
+            }
+
+            if(obj.animationNames.length > 0) {
+                const ul = document.createElement('ul');
+                ul.className = 'animation-menu';
+
+                obj.animationNames.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+
+                    li.addEventListener('click', () => {
+                        obj.playAnimation(name);
+                    });
+
+                    ul.append(li);
+                })
+
+                this.#viewer.append(ul);
+            }
+        });
         this.#viewer.append(this.#mv.domElement);
         this.#animateViewer();
     }
@@ -150,6 +179,14 @@ class ModelViewer {
 }
 
 const model_viewer = new ModelViewer();
-document.getElementById('3d-assets-page').append(model_viewer.domElement);
+document.querySelector('#three-d-assets-page > .main-content').append(model_viewer.domElement);
 
-model_viewer.viewModel('../src/models/Player.fbx');
+const models_dir = '../src/models/';
+
+const object_select = document.querySelector('.object-selection');
+
+model_viewer.viewModel(models_dir+object_select.value);
+
+object_select.addEventListener('change', e => {
+    model_viewer.viewModel(models_dir+object_select.value);
+});
