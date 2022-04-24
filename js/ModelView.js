@@ -10,8 +10,6 @@ class ModelView {
     #camera = null;
     #renderer = null;
     #domElement = null;
-    #width = 100;
-    #height = 100;
     #controls = null;
     #animeMixer = null;
     #animeAction = null;
@@ -20,11 +18,12 @@ class ModelView {
     #selectedAnimation = null;
     #animation_names = [];
     #on_model_loaded = null;
+    
+    width = 100;
+    height = 100;
 
-    constructor(model_url, width, height, on_model_loaded) {
+    constructor(model_url, on_model_loaded) {
         this.#model_url = model_url;
-        this.#width = width;
-        this.#height = height;
         this.#on_model_loaded = on_model_loaded;
 
         this.#loadModel();
@@ -32,7 +31,7 @@ class ModelView {
         this.#createLightning();
 
         this.#domElement = this.#renderer.domElement;
-        this.#renderer.setSize( this.#width, this.#height );
+        this.#renderer.setSize( this.width, this.height );
 
         this.#camera.position.z = 2;
         this.#camera.position.y = 1;
@@ -51,7 +50,7 @@ class ModelView {
 
     #Init() {
         this.#scene = new THREE.Scene();
-        this.#camera = new THREE.PerspectiveCamera(75, this.#width/this.#height, 0.1, 1000);
+        this.#camera = new THREE.PerspectiveCamera(75, this.width/this.height, 0.1, 1000);
         this.#renderer = new THREE.WebGLRenderer();
         this.#controls = new OrbitControls(this.#camera, this.#renderer.domElement);
     }
@@ -81,7 +80,6 @@ class ModelView {
                         this.#animeActions.push({'name':animation.name, 'action':action});
                     });
 
-                    this.#animeActions[0].action.play();
                 }
                 
                 this.#on_model_loaded(this);
@@ -95,6 +93,11 @@ class ModelView {
                 console.log(error);
             }
         );
+    }
+
+    setRendererSize(x, y) {
+        this.#camera.aspect = x/y;
+        this.#renderer.setSize(x, y);
     }
 
     playAnimation(animeName) {

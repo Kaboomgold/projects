@@ -1,13 +1,4 @@
-const categoryLinks = document.querySelectorAll('.category-menu > ul a');
+import { Dom_Utils } from "./dom_utils.js";
 
-for (let i = 0; i < categoryLinks.length; i++) {
-
-    categoryLinks[i].addEventListener('click', () => {
-
-        categoryLinks.forEach(link => {
-            link.classList.remove('active');
-        });
-
-        categoryLinks[i].classList.add('active');
-    });
-}
+const categoryLinks = document.querySelectorAll('.category-menu > ul a')
+Dom_Utils.domElementSelector(categoryLinks);
