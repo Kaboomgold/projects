@@ -1,4 +1,4 @@
-<div class="page 3d-assets" id="three-d-assets-page">
+<div class="page 3d-assets" id="<?=basename(__FILE__, '.php'); ?>-page">
     <h1>3D Assets</h1>
 
     <div class="main-content">

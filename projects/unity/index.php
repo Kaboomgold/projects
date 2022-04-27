@@ -21,7 +21,6 @@
     
 </head>
 <body>
-
     <header>
         <h1>Unity</h1>
     </header>
@@ -31,12 +30,10 @@
             <li>
                 <a href="../../index.php">[<-]</a>
             </li>
-            <li>
-                <a href="#scripts-page" class="active">scripts</a>
-            </li>
-            <li>
-                <a href="#three-d-assets-page">3D assets</a>
-            </li>
+
+            <?php foreach ($pages as $pageName) { ?>
+                <li><a href="#<?=preparePageName($pageName, false); ?>-page"><?=preparePageName($pageName, true); ?></a></li>
+            <?php } ?>
         </ul>
     </nav>
 

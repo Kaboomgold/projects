@@ -5,7 +5,7 @@ class Models_Page extends Page {
     constructor() {
         super('#three-d-assets-page');
         const model_viewer = new ModelViewer();
-        document.querySelector('#three-d-assets-page > .main-content').append(model_viewer.domElement);
+        document.querySelector(`#${ CSS.escape('3d-assets-page') } > .main-content`).append(model_viewer.domElement);
 
         const models_dir = '../src/models/';
         const object_select = document.querySelector('.object-selection');
