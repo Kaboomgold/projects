@@ -4,14 +4,12 @@
         <h1>Scripts</h1>
 
         <div class="wrapper">
-            <ul class="script-list">
-                <?php foreach($scripts as $script) { ?>
-                    <li><?=$script; ?></li>
-                <?php } ?>
-            </ul>
 
             <div class="script">
             </div>
+            
+            <div class="file-menu"><?=CreateFileMenu($sripts_structure);?></div>
+            <button class="file-menu-btn">+</button>
         </div>
     </div>
 </div>

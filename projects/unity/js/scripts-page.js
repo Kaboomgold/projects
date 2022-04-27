@@ -4,7 +4,7 @@ import { ScriptsViewer } from "./scripts-viewer.js";
 class Scripts_Page extends Page { 
     constructor() {
         super('.scripts');
-        const sv = new ScriptsViewer();
+        const sv = new ScriptsViewer(this._page_domElement);
     }
 }
 

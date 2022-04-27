@@ -3,17 +3,29 @@ import { Dom_Utils } from "../../../js/dom_utils.js";
 
 class ScriptsViewer {
 
-    constructor() {
+    #scripts_element = null;
+
+    constructor(scripts_element) {
+        this.#scripts_element = scripts_element;
         this.#generateScripts();
+
+        const file_menu = scripts_element.querySelector('.file-menu');
+        const file_menu_btn = scripts_element.querySelector('.file-menu-btn');
+        
+        file_menu_btn.addEventListener('click', e => {
+            file_menu_btn.classList.toggle('active');
+            file_menu.classList.toggle('open');
+        }, false);
     }
 
     #generateScripts() {
-        const scriptsList = document.querySelector('.script-list');
-        const listItems = [...scriptsList.children];
+        const listItems = [...document.querySelectorAll('.file')];
 
         listItems.forEach(listItem => {
             listItem.addEventListener('click', e => {
-                this.#getColorizedScript(listItem.textContent, colorized_script => {
+                const fileName = listItem.querySelector('p').textContent;
+
+                this.#getColorizedScript(fileName, colorized_script => {
                     this.#addColorizedScript(colorized_script);
                 });        
             });
