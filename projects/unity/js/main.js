@@ -21,7 +21,4 @@ class Main {
         const mp = new Models_Page();
         addSubMenuEvents();
     }
-
-
-
 }

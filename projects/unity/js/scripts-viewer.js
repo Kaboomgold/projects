@@ -19,7 +19,7 @@ class ScriptsViewer {
     }
 
     #generateScripts() {
-        const listItems = [...document.querySelectorAll('.file')];
+        const listItems = [...this.#scripts_element.querySelectorAll('.file')];
 
         listItems.forEach(listItem => {
             listItem.addEventListener('click', e => {

@@ -3,14 +3,14 @@ import { ModelView } from "../../../js/ModelView.js";
 class ModelViewer {
     #mv = null;
     #viewer = document.createElement('div');
-    
+    on_model_loaded = null;
+
     constructor() {
         this.#viewer.className = 'model_viewer_container';
     }
 
     viewModel(path_to_model) {
         this.#viewer.innerHTML = '';
-        this.#viewer.style.width = `${700}px`;
 
         this.#mv = new ModelView(path_to_model, obj => {
 
@@ -35,9 +35,20 @@ class ModelViewer {
                 })
 
                 this.#viewer.append(ul);
+
+                if(typeof(this.on_model_loaded) == 'function') {
+                    this.on_model_loaded({'animation_menu': ul});
+                }
             }
         });
-        this.#mv.setRendererSize(700,700);
+
+        const { width, height } = this.#viewer.getBoundingClientRect();
+        this.#mv.setRendererSize(width,height);
+
+        window.addEventListener('resize', () => {
+            const { width, height } = this.#viewer.getBoundingClientRect();
+            this.#mv.setRendererSize(width,height);
+        });
         
         this.#viewer.append(this.#mv.domElement);
         this.#animateViewer();

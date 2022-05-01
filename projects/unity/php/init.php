@@ -17,7 +17,7 @@ function CreateFileMenu(array $arr, $folder_name = '') {
 
     foreach($arr as $folder_name => $item) {
         if(is_array($item)) {
-            $html .= '<li class="sub-menu"><div><p>'.$folder_name.'</p></div>'.CreateFileMenu($item, $folder_name).'</li>';
+            $html .= '<li class="sub-menu"><div class="folder"><p>'.$folder_name.'</p></div>'.CreateFileMenu($item, $folder_name).'</li>';
         } else {
             $html .= '<li><div class="file" ><p>'.$item.'</p></div></li>';
         }

@@ -26,12 +26,17 @@ class ModelView {
         this.#model_url = model_url;
         this.#on_model_loaded = on_model_loaded;
 
-        this.#loadModel();
         this.#Init();
+        this.#loadModel();
         this.#createLightning();
+        this.#createFloor();
+        
+        this.#scene.background = new THREE.Color(0x327da8);
 
         this.#domElement = this.#renderer.domElement;
         this.#renderer.setSize( this.width, this.height );
+        this.#renderer.shadowMap.enabled = true;
+        this.#renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         this.#camera.position.z = 2;
         this.#camera.position.y = 1;
@@ -51,17 +56,30 @@ class ModelView {
     #Init() {
         this.#scene = new THREE.Scene();
         this.#camera = new THREE.PerspectiveCamera(75, this.width/this.height, 0.1, 1000);
-        this.#renderer = new THREE.WebGLRenderer();
+        this.#renderer = new THREE.WebGLRenderer({ antialising: true });
         this.#controls = new OrbitControls(this.#camera, this.#renderer.domElement);
     }
 
     #createLightning() {
-        const ambientLight = new THREE.AmbientLight();
-        this.#scene.add(ambientLight);
-
-        const light = new THREE.PointLight();
+        const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0.8, 1.4, 1.0);
+        light.intensity = 1;
+        light.castShadow = true;
+        light.shadow.mapSize.width = 1080;
+        light.shadow.mapSize.height = 1080;
         this.#scene.add(light);
+    }
+
+    #createFloor() {
+        const floor = new THREE.PlaneGeometry(10, 10);
+        const mat = new THREE.MeshStandardMaterial({color: 0x999999});
+        const mesh = new THREE.Mesh(floor, mat);
+
+        floor.rotateX(THREE.Math.degToRad(-90));
+        mesh.receiveShadow = true;
+
+        this.#scene.add(mesh);
+        
     }
 
     #loadModel() {
@@ -81,10 +99,17 @@ class ModelView {
                     });
 
                 }
+                object.castShadow = true;
+                object.receiveShadow = true;
+
+                object.children.forEach(mesh => {
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                });
                 
                 this.#on_model_loaded(this);
-
                 this.#scene.add(object);
+                console.log(this.#scene);
             },
             (xhr) => {
                 //console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
@@ -97,6 +122,7 @@ class ModelView {
 
     setRendererSize(x, y) {
         this.#camera.aspect = x/y;
+        this.#camera.updateProjectionMatrix();
         this.#renderer.setSize(x, y);
     }
 
