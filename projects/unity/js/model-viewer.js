@@ -9,8 +9,12 @@ class ModelViewer {
         this.#viewer.className = 'model_viewer_container';
     }
 
-    viewModel(path_to_model) {
+    clear() {
         this.#viewer.innerHTML = '';
+    }
+
+    viewModel(path_to_model) {
+        this.clear();
 
         this.#mv = new ModelView(path_to_model, obj => {
 
@@ -20,38 +24,46 @@ class ModelViewer {
             }
 
             if(obj.animationNames.length > 0) {
-                const ul = document.createElement('ul');
-                ul.className = 'animation-menu';
-
-                obj.animationNames.forEach(name => {
-                    const li = document.createElement('li');
-                    li.textContent = name;
-
-                    li.addEventListener('click', () => {
-                        obj.playAnimation(name);
-                    });
-
-                    ul.append(li);
-                })
-
-                this.#viewer.append(ul);
+                
+                const anime_list = this.#createAnimationList(obj);
+                this.#viewer.append(anime_list);
 
                 if(typeof(this.on_model_loaded) == 'function') {
-                    this.on_model_loaded({'animation_menu': ul});
+                    this.on_model_loaded({'animation_menu': anime_list});
                 }
             }
         });
 
-        const { width, height } = this.#viewer.getBoundingClientRect();
-        this.#mv.setRendererSize(width,height);
-
+        this.#setSize();
         window.addEventListener('resize', () => {
-            const { width, height } = this.#viewer.getBoundingClientRect();
-            this.#mv.setRendererSize(width,height);
+            this.#setSize();
         });
         
         this.#viewer.append(this.#mv.domElement);
         this.#animateViewer();
+    }
+
+    #createAnimationList(obj) {
+        const ul = document.createElement('ul');
+        ul.className = 'animation-menu';
+
+        obj.animationNames.forEach(name => {
+            const li = document.createElement('li');
+            li.textContent = name;
+
+            li.addEventListener('click', () => {
+                obj.playAnimation(name);
+            });
+
+            ul.append(li);
+        });
+
+        return ul;
+    }
+
+    #setSize() {
+        const { width, height } = this.#viewer.getBoundingClientRect();
+        this.#mv.setRendererSize(width,height);
     }
 
     #animateViewer() {

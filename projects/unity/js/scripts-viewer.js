@@ -4,18 +4,11 @@ import { Dom_Utils } from "../../../js/dom_utils.js";
 class ScriptsViewer {
 
     #scripts_element = null;
+    viewer = null;
 
     constructor(scripts_element) {
         this.#scripts_element = scripts_element;
-        this.#generateScripts();
-
-        const file_menu = scripts_element.querySelector('.file-menu');
-        const file_menu_btn = scripts_element.querySelector('.file-menu-btn');
-        
-        file_menu_btn.addEventListener('click', e => {
-            file_menu_btn.classList.toggle('active');
-            file_menu.classList.toggle('open');
-        }, false);
+        this.viewer = scripts_element.querySelector('.script');
     }
 
     #generateScripts() {
@@ -34,6 +27,16 @@ class ScriptsViewer {
         Dom_Utils.domElementSelector(listItems);
     }
 
+    clear() {
+        this.viewer.innerHTML = '';
+    }
+
+    viewScript(scriptName) {
+        this.#getColorizedScript(scriptName, colorized_script => {
+            this.#addColorizedScript(colorized_script);
+        });   
+    }
+
     #getColorizedScript(script_name, callback) {
         AjaxHandler.Ajax_JSON_Request(`./php/ajax/get-colorized-script-html.php`, colorized_script => {
             callback(colorized_script);
@@ -41,7 +44,7 @@ class ScriptsViewer {
     }
 
     #addColorizedScript(colorized_script) {
-        document.querySelector('.scripts .script').innerHTML = colorized_script;
+        this.viewer.innerHTML = colorized_script;
     }
 
 }

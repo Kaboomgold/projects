@@ -6,10 +6,10 @@ define('SCRIPTS_DIR', './src/scripts');
 
 $pages = FileHandler::GetFilesFromDir('./pages');
 $scripts = FileHandler::GetFilesFromDir(SCRIPTS_DIR);
-$model_names = FileHandler::GetFilesFromDir('./src/models');
+$model_names = FileHandler::GetFilesFromDir('./src');
 
 $sripts_structure = FileHandler::GetFileStucture(SCRIPTS_DIR);
-$models_structure = FileHandler::GetFileStucture('./src/models');
+$models_structure = FileHandler::GetFileStucture('./src');
 
 function CreateFileMenu(array $arr, $folder_name = '') {
 

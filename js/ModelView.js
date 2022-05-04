@@ -109,7 +109,6 @@ class ModelView {
                 
                 this.#on_model_loaded(this);
                 this.#scene.add(object);
-                console.log(this.#scene);
             },
             (xhr) => {
                 //console.log((xhr.loaded / xhr.total) * 100 + '% loaded');

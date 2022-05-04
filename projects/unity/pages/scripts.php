@@ -9,7 +9,7 @@
             </div>
             
             <div class="file-menu"><?=CreateFileMenu($sripts_structure);?></div>
-            <button class="file-menu-btn">+</button>
+            <button class="file-menu-btn"></button>
         </div>
     </div>
 </div>

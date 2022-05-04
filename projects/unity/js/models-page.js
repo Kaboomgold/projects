@@ -1,15 +1,17 @@
 import { Page } from "./page.js";
 import { ModelViewer } from "./model-viewer.js";
 import { Dom_Utils } from "../../../js/dom_utils.js";
+import { ScriptsViewer } from "./scripts-viewer.js";
 
 class Models_Page extends Page {
-    #models_dir = '../src/models/';
     #model_viewer_container = this._page_domElement.querySelector('.model-viewer-container');
     #model_viewer = new ModelViewer();
+    #scripts_viewer = null;
 
     constructor() {
         super('#three-d-assets-page');
 
+        this.#scripts_viewer = new ScriptsViewer(this._page_domElement);
         this.#model_viewer_container.prepend(this.#model_viewer.domElement);
 
         this.#selected_model_loader();
@@ -41,31 +43,42 @@ class Models_Page extends Page {
                 const fileName = file.querySelector('p').textContent;
                 const texture_viewer = this.#model_viewer_container.querySelector('.texture-viewer');
 
-                // let path = '';
+                let path = '';
 
-                // function getPath(element){
+                function getPath(element){
 
-                //     if(parent = element.parentElement) {
-
-                //         if(parent.classList.contains('file-menu')) {
-
-                //         } else if (parent.classList.contains('sub-menu')) {
-                //             const folderName = parent.querySelector('.folder > p').textContent;
-                //             path += folderName;
-                //             getPath(parent);
-                //         } else {
-                //             getPath(parent);
-                //         }
-                //     }
-                // }
-                // getPath(file);
-                // console.log(path + ' | ' + fileName);
+                    if(parent = element.parentElement) {
+                        if(parent.classList.contains('file-menu')) return;
+                        
+                        if (parent.classList.contains('sub-menu')) {
+                            const folderName = parent.querySelector('.folder > p').textContent;
+                            path = folderName + '/' + path;
+                            getPath(parent);
+                        } else {
+                            getPath(parent);
+                        }
+                    }
+                }
+                getPath(file);
 
                 if(fileName.match(/.png|.jpg/)) {
-                    texture_viewer.style.cssText = `background-image: url('./src/models/${fileName}');`;
-                } else {
+
+                    texture_viewer.style.cssText = `background-image: url('./${path+fileName}');`;
+                    this.#scripts_viewer.clear();
+                    this.#model_viewer.clear();
+
+                } else if (fileName.match(/.fbx/)) {
+
                     texture_viewer.style.cssText = '';
-                    this.#model_viewer.viewModel(this.#models_dir+fileName);
+                    this.#scripts_viewer.clear();
+                    this.#model_viewer.viewModel(`../${path+fileName}`);
+
+                } else if (fileName.match(/.cs/)) {
+
+                    texture_viewer.style.cssText = '';
+                    this.#model_viewer.clear();
+                    this.#scripts_viewer.viewScript(fileName);
+
                 }
 
             });

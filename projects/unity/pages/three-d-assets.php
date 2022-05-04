@@ -3,9 +3,10 @@
 
     <div class="main-content">
         <div class="model-viewer-container">
+            <div class="script"></div>
             <div class="texture-viewer"></div>
             <div class="file-menu"><?=CreateFileMenu($models_structure);?></div>
-            <button class="file-menu-btn">+</button>
+            <button class="file-menu-btn"></button>
         </div>
     </div>
 </div>
