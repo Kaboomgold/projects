@@ -10,6 +10,13 @@ class ScriptColorizer {
                 return new CSharpColorizer($scriptLoc);
             }
                 break;
+            case '.json': {
+                return new JSONColorizer($scriptLoc);
+            }
+                break;
+            default: {
+                return new Colorizer($scriptLoc);
+            }
         }
     } 
 }

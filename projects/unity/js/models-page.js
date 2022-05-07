@@ -17,6 +17,9 @@ class Models_Page extends Page {
         this.#selected_model_loader();
         this.#setup_file_menu_events();
         this.#setup_animation_menu_selector();
+
+        const files = [...this._page_domElement.querySelectorAll('.file')]
+        Dom_Utils.domElementSelector(files);
     }
 
     #setup_animation_menu_selector() {
@@ -28,9 +31,20 @@ class Models_Page extends Page {
 
     #setup_file_menu_events() {
         const file_menu = this._page_domElement.querySelector('.file-menu');
-        const file_menu_btn = this._page_domElement.querySelector('.file-menu-btn');
+        const file_menu_btn = document.querySelector('.file-menu-btn');
+        const file_menu_close_btn = this._page_domElement.querySelector('.file-menu-close-btn');
         
+        Dom_Utils.addSimpleDrag(file_menu);
+        Dom_Utils.addSimpleDragTouch(file_menu);
+
+        file_menu_close_btn.addEventListener('click', e => {
+            e.preventDefault();
+            file_menu_btn.classList.toggle('active');
+            file_menu.classList.toggle('open');
+        }, false);
+
         file_menu_btn.addEventListener('click', e => {
+            e.preventDefault();
             file_menu_btn.classList.toggle('active');
             file_menu.classList.toggle('open');
         }, false);
@@ -40,6 +54,7 @@ class Models_Page extends Page {
         const files = [...this._page_domElement.querySelectorAll('.file')];
         files.forEach(file => {
             file.addEventListener('click', e => {
+                e.preventDefault();
                 const fileName = file.querySelector('p').textContent;
                 const texture_viewer = this.#model_viewer_container.querySelector('.texture-viewer');
 
@@ -63,7 +78,7 @@ class Models_Page extends Page {
 
                 if(fileName.match(/.png|.jpg/)) {
 
-                    texture_viewer.style.cssText = `background-image: url('./${path+fileName}');`;
+                    texture_viewer.style.cssText = `background-image: url('./src/${path+fileName}');`;
                     this.#scripts_viewer.clear();
                     this.#model_viewer.clear();
 
@@ -71,13 +86,13 @@ class Models_Page extends Page {
 
                     texture_viewer.style.cssText = '';
                     this.#scripts_viewer.clear();
-                    this.#model_viewer.viewModel(`../${path+fileName}`);
+                    this.#model_viewer.viewModel(`../src/${path+fileName}`);
 
-                } else if (fileName.match(/.cs/)) {
+                } else if (fileName.match(/.cs|.json|.txt/)) {
 
                     texture_viewer.style.cssText = '';
                     this.#model_viewer.clear();
-                    this.#scripts_viewer.viewScript(fileName);
+                    this.#scripts_viewer.viewScript(path+fileName);
 
                 }
 

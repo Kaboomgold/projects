@@ -45,6 +45,7 @@
 .main-content {
     padding: 20px;
 }
+
 .code-list {
     background-color: rgb(24, 24, 24);
     margin: 0px;
@@ -122,10 +123,6 @@ ul.animation-menu {
             background-color: rgba(155,155,155,1);
         }   
     }
-
-    li.active {
-
-    }
 }
 
 .script pre {
@@ -160,7 +157,8 @@ body {
 }
 
 .file-menu {
-    overflow: auto;
+    overflow: hidden;
+    border: none;
 
     ul.menu {
         list-style-type: none;
@@ -178,10 +176,6 @@ body {
             position: relative;
             font-size: small;
 
-            &.active {
-                background-color: rgb(244, 244, 244);
-            }
-
             > p {
                 position: absolute;
                 left: 10px;
@@ -194,7 +188,7 @@ body {
 
             &::after {
                 content: '';
-                border-top: 1px solid #c4c4c4;
+                // border-top: 1px solid #c4c4c4;
                 position: absolute;
                 width: 100%;
                 pointer-events: none;
@@ -217,6 +211,7 @@ body {
     }
 
     .sub-menu {
+
         > div {
             background-color: #e8e8e8;
             height: 30px;
@@ -226,11 +221,63 @@ body {
                 .absolute-center() !important;
                 font-size: initial;
                 font-weight: bold;
+                font-size: x-large;
+                letter-spacing: 1px;
             }
+        }
+
+        .folder {
+            position: relative;
+        }
+
+        .folder::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            border: none;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-image: url('../../../images/folder-closed.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+
+        }
+
+        .menu > li > .file {
+            border-bottom: 1px solid gray;
+        }
+
+        &.active > .folder::after {
+            background-image: url('../../../images/folder-open.png');
         }
     }
 
-    
+    .folder {
+
+        &.active {
+            background-color: antiquewhite;
+        }
+
+        &:hover {
+            background-color: rgb(194, 194, 194);
+        }
+    }
+
+    .file {
+
+        background-color: white;
+
+        &.active {
+            background-color: #d6d6d6;
+        }
+
+        &:hover {
+            background-color: #d6d6d6;
+        }
+    }    
 }
 
 .scripts, .three-d-assets {
@@ -253,10 +300,36 @@ body {
 
     .file-menu {
         display: none;
-        background-color: white;
-        position: absolute;
+        background-color: rgb(218, 218, 218);
+        position: fixed;
         width: 100%;
-        top: 0px;
+        max-width: 450px;
+        top: 20%;
+        right: 100px;
+        padding: 3px;
+        padding-top: 25px;
+        border-radius: 2px;
+
+        .file-menu-close-btn {
+            background-color: red;
+            color: white;
+            position: absolute;
+            width: auto;
+            top: 12px;
+            right: 3px;
+            transform: translateY(-50%);
+            border: none;
+
+            &:hover {
+                background-color: rgb(255, 73, 73);
+                cursor: pointer;
+            }
+
+            &:active {
+                background-color: rgb(218, 16, 16);
+                cursor: pointer;
+            }
+        }
 
         &.open {
             display: block;
@@ -267,6 +340,8 @@ body {
         position: absolute;
         border-radius: 100%;
         border: 1px solid gray;
+        // border: none;
+        background-color: transparent;
         top: 20px;
         right: 20px;
         font-size: 50px;
@@ -275,6 +350,9 @@ body {
         transition: transform .1s, border-width .1s;
         padding: 0px;
         transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        // background-image: url('../../../images/folder-closed.png');
+        // background-size: contain;
+        // background-repeat: no-repeat;
         
 
         &:hover {
@@ -290,6 +368,7 @@ body {
             transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
             border-width: 10px;
             transition: transform .1s, border-width .1s;
+            // background-image: url('../../../images/folder-open.png');
         }
 
         &::after {

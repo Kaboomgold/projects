@@ -1,4 +1,3 @@
-import { Scripts_Page } from "./scripts-page.js";
 import { Models_Page } from "./models-page.js";
 
 function addSubMenuEvents() {
@@ -9,6 +8,7 @@ function addSubMenuEvents() {
         const menu = sub_menus[i].querySelector('ul');
 
         name.addEventListener('click', e => {
+            sub_menus[i].classList.toggle('active');
             menu.classList.toggle('open');
         });
     }
@@ -17,7 +17,6 @@ function addSubMenuEvents() {
 class Main { 
 
     static {
-        const sp = new Scripts_Page();
         const mp = new Models_Page();
         addSubMenuEvents();
     }
