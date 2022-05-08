@@ -22,18 +22,19 @@
 </head>
 <body>
     <header>
-        <h1>Unity</h1>
+        <h1>Assets</h1>
     </header>
 
     <nav class="category-menu">
         <ul>
             <li>
-                <a href="../../index.php">[<-]</a>
+                <a href="../../index.php">Projects</a>
             </li>
 
-            <?php foreach ($pages as $pageName) { ?>
+        <?php if(count($pages) > 1) {
+                foreach ($pages as $pageName) { ?>
                 <li><a href="#<?=preparePageName($pageName, false); ?>-page"><?=preparePageName($pageName, true); ?></a></li>
-            <?php } ?>
+            <?php } } ?>
         </ul>
     </nav>
 

@@ -38,13 +38,11 @@ class Models_Page extends Page {
         Dom_Utils.addSimpleDragTouch(file_menu);
 
         file_menu_close_btn.addEventListener('click', e => {
-            e.preventDefault();
             file_menu_btn.classList.toggle('active');
             file_menu.classList.toggle('open');
         }, false);
 
         file_menu_btn.addEventListener('click', e => {
-            e.preventDefault();
             file_menu_btn.classList.toggle('active');
             file_menu.classList.toggle('open');
         }, false);
@@ -54,7 +52,6 @@ class Models_Page extends Page {
         const files = [...this._page_domElement.querySelectorAll('.file')];
         files.forEach(file => {
             file.addEventListener('click', e => {
-                e.preventDefault();
                 const fileName = file.querySelector('p').textContent;
                 const texture_viewer = this.#model_viewer_container.querySelector('.texture-viewer');
 

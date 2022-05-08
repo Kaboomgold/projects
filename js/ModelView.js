@@ -31,7 +31,7 @@ class ModelView {
         this.#createLightning();
         this.#createFloor();
         
-        this.#scene.background = new THREE.Color(0x327da8);
+        this.#scene.background = new THREE.Color(0x2f2f2f);
 
         this.#domElement = this.#renderer.domElement;
         this.#renderer.setSize( this.width, this.height );

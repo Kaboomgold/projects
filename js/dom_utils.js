@@ -34,8 +34,8 @@ class Dom_Utils {
             const offsetY = (e.touches[0].clientY - rect.top);
 
             window.addEventListener('touchmove', e => {
-                element.style.left = `${e.touches[0].clientX - (offsetX)}px`;
-                element.style.top = `${e.touches[0].clientY - (offsetY)}px`;
+                element.style.left = `${e.touches[0].clientX - offsetX}px`;
+                element.style.top = `${e.touches[0].clientY - offsetY}px`;
             }, { signal: abort_controller.signal, passive: true});
 
             window.addEventListener('touchend', e => {
@@ -46,18 +46,18 @@ class Dom_Utils {
 
     static addSimpleDrag(element) {
         element.addEventListener('mousedown', e => {
-            e.preventDefault();
+            
+            if(e.target != element) return;
+
             const abort_controller = new AbortController();
             const { offsetX, offsetY } = e;
 
             window.addEventListener('mousemove', e => {
-                e.preventDefault();
-                element.style.left = `${e.clientX - (offsetX)}px`;
-                element.style.top = `${e.clientY - (offsetY)}px`;
+                element.style.left = `${e.clientX - offsetX}px`;
+                element.style.top = `${e.clientY - offsetY}px`;
             }, { signal: abort_controller.signal });
 
             window.addEventListener('mouseup', e => {
-                e.preventDefault();
                 abort_controller.abort();
             }, { signal: abort_controller.signal });
         });

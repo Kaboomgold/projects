@@ -4,11 +4,15 @@ import { Dom_Utils } from "../../../js/dom_utils.js";
 class ScriptsViewer {
 
     #scripts_element = null;
-    viewer = null;
+    #viewer = null;
 
     constructor(scripts_element) {
         this.#scripts_element = scripts_element;
-        this.viewer = scripts_element.querySelector('.script');
+        this.#viewer = scripts_element.querySelector('.script');
+    }
+
+    get Viewer() {
+        return this.#viewer;
     }
 
     #generateScripts() {
@@ -28,11 +32,13 @@ class ScriptsViewer {
     }
 
     clear() {
-        this.viewer.innerHTML = '';
+        this.#viewer.classList.remove('viewing');
+        this.#viewer.innerHTML = '';
     }
 
     viewScript(scriptName) {
         this.#getColorizedScript(scriptName, colorized_script => {
+            this.#viewer.classList.add('viewing');
             this.#addColorizedScript(colorized_script);
         });   
     }
@@ -44,7 +50,7 @@ class ScriptsViewer {
     }
 
     #addColorizedScript(colorized_script) {
-        this.viewer.innerHTML = colorized_script;
+        this.#viewer.innerHTML = colorized_script;
     }
 
 }

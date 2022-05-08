@@ -1,6 +1,5 @@
 <div class="page three-d-assets" id="<?=basename(__FILE__, '.php'); ?>-page">
-    <h1>3D Assets</h1>
-    <button class="file-menu-btn"></button>
+    <button class="file-menu-btn" title="Select a asset."></button>
 
     <div class="main-content">
         <div class="model-viewer-container">

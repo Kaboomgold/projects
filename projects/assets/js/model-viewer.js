@@ -1,4 +1,5 @@
 import { ModelView } from "../../../js/ModelView.js";
+import { Dom_Utils } from "../../../js/dom_utils.js";
 
 class ModelViewer {
     #mv = null;
@@ -28,6 +29,8 @@ class ModelViewer {
                 const anime_list = this.#createAnimationList(obj);
                 this.#viewer.append(anime_list);
 
+                Dom_Utils.domElementSelector(anime_list);
+
                 if(typeof(this.on_model_loaded) == 'function') {
                     this.on_model_loaded({'animation_menu': anime_list});
                 }
@@ -49,7 +52,9 @@ class ModelViewer {
 
         obj.animationNames.forEach(name => {
             const li = document.createElement('li');
-            li.textContent = name;
+            const span = document.createElement('span');
+            
+            li.innerHTML = `<p>${name}</p><span></span>`;
 
             li.addEventListener('click', () => {
                 obj.playAnimation(name);
