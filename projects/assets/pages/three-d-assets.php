@@ -7,5 +7,14 @@
             <div class="texture-viewer"></div>
             <div class="file-menu"><button type="button" class="file-menu-close-btn">X</button> <?=CreateFileMenu($models_structure);?></div>
         </div>
+
+
+        <div class="info-section">
+            <div>
+                <p>description:</p>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <button type="button" class="update">Update</button>
+        </div>
     </div>
 </div>

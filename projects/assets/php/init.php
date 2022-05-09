@@ -2,6 +2,7 @@
 include_once '../../php/utility.php';
 include_once './php/colorizer/colorizer.php';
 
+
 define('ASSETS_DIR', './src/assets');
 
 $pages = FileHandler::GetFilesFromDir('./pages');

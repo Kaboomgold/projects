@@ -13,6 +13,15 @@ class Project {
         $this -> Init();
     }
 
+    private function info_defaults($info) {
+
+        if(empty($info['description'])) {
+            $info['description'] = '-';
+        }
+
+        return $info;
+    }
+
     private function Init() {
         $this -> GetProjectFiles();
         $this -> ReadInfo();
@@ -27,7 +36,9 @@ class Project {
     }
 
     public function GetInfo() {
-        return $this -> info;
+        $info_clean = $this->info_defaults($this -> info);
+
+        return $info_clean;
     }
     
     private function GetProjectFiles() {

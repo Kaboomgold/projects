@@ -10,21 +10,25 @@ header h1 {
 }
 //test
 #projects {
-    overflow: hidden;
+    max-width: 40%;
+    margin: 0 auto;
 
     .project {
+        border: 1px solid black;
         width: 100%;
         position: relative;
         display: flex;
         flex-direction: row;
         background-color: white;
-        transition: transform 1s, background-color 1s;
+        transition: transform .3s, background-color .3s;
+        margin-bottom: 10px;
+        animation: fadein 0.3s ease-out 0s 1 forwards;
 
         &:hover {
             cursor: pointer;
             transform: scale(1.05, 1.05);
             background-color: lightgray;
-            transition: transform 1s, background-color 1s;
+            transition: transform .3s, background-color .3s;
         }
 
         div {
@@ -108,5 +112,14 @@ header h1 {
         h1 {
             text-align: center;
         }
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
