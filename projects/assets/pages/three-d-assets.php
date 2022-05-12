@@ -8,7 +8,13 @@
             <div class="file-menu"><button type="button" class="file-menu-close-btn">X</button> <?=CreateFileMenu($models_structure);?></div>
         </div>
 
+        <div class="info-section-wrapper">
+            <select class="section-selector">
 
+            </select>
+        </div>
+
+        <button type="button" class="add-info-button">Add Info</button>
         <div class="info-container">
         </div>
         

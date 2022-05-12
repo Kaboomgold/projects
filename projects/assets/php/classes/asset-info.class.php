@@ -25,8 +25,6 @@ class Asset_Info {
     }
 
     private function save() {
-        if(!$this -> file_exists) return;
-
         $file_handle = fopen($this -> file_path, "w+");
         fwrite($file_handle, json_encode($this -> asset_info));
         fclose($file_handle);
@@ -46,8 +44,6 @@ class Asset_Info {
     }
 
     public function add_info_section(string $key, string $value) {
-        if(!$this -> file_exists) return;
-        
         $this -> asset_info[$key] = $value;
         $this -> save();
     }
@@ -55,7 +51,7 @@ class Asset_Info {
     public function remove_info_section(string $section_name) {
         if(!$this -> file_exists) return;
 
-        unset($this -> asset_info[$key]);
+        unset($this -> asset_info[$section_name]);
         $this -> save();
     }
 }

@@ -20,7 +20,7 @@ if(!empty($_POST['ajax_data'])) {
 
     if($action == 'remove') {
         foreach($data['info_sections'] as $key => $value) {
-            $asset_info -> remove_info_section($data['name']);
+            $asset_info -> remove_info_section($key);
         }
     }
 

@@ -16,6 +16,16 @@ class Info_Section_Handler {
         this.generate_info_sections();
     }
 
+    add_info_section_by_info_type(info_type) {
+        const classes = Info_Section_Handler.section_classes;
+        for(let i = 0; i < classes.length; i++) {
+
+            if(info_type == classes[i].INFO_TYPE) {
+                this.add_info_section(classes[i]);
+            }
+        }
+    }
+
     generate_info_sections() {
         AjaxHandler.Ajax_JSON_Request(Info_Section_Handler.info_section_ajax_handler, response => {
             const info_sections = JSON.parse(response);
@@ -110,6 +120,7 @@ class Info_Section_Description extends Info_Section {
 
     #input = document.createElement('textarea');
     #update_btn = document.createElement('button');
+    #delete_btn = document.createElement('button');
     static INFO_TYPE = "description";
     
     static { this.initialize(this) }
@@ -119,6 +130,7 @@ class Info_Section_Description extends Info_Section {
         this._section_name = 'description';
         this.#init_elements();
         this.#add_update_event();
+        this.#add_delete_event();
     }
 
     #init_elements() {
@@ -131,16 +143,26 @@ class Info_Section_Description extends Info_Section {
 
         this.#update_btn.type = 'button';
         this.#update_btn.className = 'update';
-        this.#update_btn.textContent = 'Update'; 
+        this.#update_btn.textContent = 'Update';
+        
+        this.#delete_btn.type = 'button';
+        this.#delete_btn.className = 'delete';
+        this.#delete_btn.textContent = 'Delete';
 
         wrapper.append(p, this.#input);
-        this._section_element.append(wrapper, this.#update_btn);
+        this._section_element.append(wrapper, this.#update_btn, this.#delete_btn);
     }
 
     #add_update_event() {
         this.#update_btn.addEventListener('click', e => {
             this.section_value = this.#input.value;
             this.Update();
+        });
+    }
+
+    #add_delete_event() {
+        this.#delete_btn.addEventListener('click', e => {
+            this.Remove();
         });
     }
 
@@ -153,6 +175,7 @@ class Info_Section_Description extends Info_Section {
 class Info_Section_Text extends Info_Section{
     #input = document.createElement('input');
     #update_btn = document.createElement('button');
+    #delete_btn = document.createElement('button');
     static INFO_TYPE = "name";
 
     static { this.initialize(this) }
@@ -162,6 +185,7 @@ class Info_Section_Text extends Info_Section{
         this._section_name = 'name';
         this.#init_elements();
         this.#add_update_event();
+        this.#add_delete_event();
     }
 
     #init_elements() {
@@ -176,9 +200,13 @@ class Info_Section_Text extends Info_Section{
         this.#update_btn.type = 'button';
         this.#update_btn.className = 'update';
         this.#update_btn.textContent = 'Update'; 
+        
+        this.#delete_btn.type = 'button';
+        this.#delete_btn.className = 'delete';
+        this.#delete_btn.textContent = 'Delete';
 
         wrapper.append(p, this.#input);
-        this._section_element.append(wrapper, this.#update_btn);
+        this._section_element.append(wrapper, this.#update_btn, this.#delete_btn);
     }
 
     #add_update_event() {
@@ -190,6 +218,12 @@ class Info_Section_Text extends Info_Section{
 
     set_value(value) {
         this.#input.value = value;
+    }
+
+    #add_delete_event() {
+        this.#delete_btn.addEventListener('click', e => {
+            this.Remove();
+        });
     }
 }
 

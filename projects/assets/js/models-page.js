@@ -18,15 +18,12 @@ class Models_Page extends Page {
         this.#selected_model_loader();
         this.#setup_file_menu_events();
         this.#setup_animation_menu_selector();
-        this.#createInfoSections();
 
         const files = [...this._page_domElement.querySelectorAll('.file')]
         Dom_Utils.domElementSelector(files);
     }
 
-    #createInfoSections() {
-        const info_sections = this._page_domElement.querySelectorAll('info-container');
-    }
+    
 
     #setup_animation_menu_selector() {
         this.#model_viewer.on_model_loaded = (obj) => {
@@ -63,6 +60,19 @@ class Models_Page extends Page {
 
                 this.#model_viewer_container.setAttribute('file-data', fileName);
                 const info_section_handler = new Info_Section_Handler(fileName);
+
+                const section_selector = document.querySelector('.section-selector');
+                const add_info_btn = document.querySelector('.add-info-button');
+
+                Info_Section_Handler.section_classes.forEach(curr_class => {
+                    const option = document.createElement('option');
+                    option.textContent = curr_class.INFO_TYPE;
+                    section_selector.append(option);
+                });
+
+                add_info_btn.addEventListener('click', e => {
+                    info_section_handler.add_info_section_by_info_type(section_selector.value);
+                });
 
                 let path = '';
 
