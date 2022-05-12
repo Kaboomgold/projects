@@ -13,13 +13,18 @@ class Project {
         $this -> Init();
     }
 
-    private function info_defaults($info) {
-
-        if(empty($info['description'])) {
-            $info['description'] = '-';
+    private function info_defaults(array &$arr, $val) {
+        if(is_array($val)) {
+            foreach($val as $single_val) {
+                if(empty($arr[$single_val])) {
+                    $arr[$single_val] = '-';
+                }
+            }
+        } else {
+            if(empty($arr[$val])) {
+                $arr[$val] = '-';
+            }
         }
-
-        return $info;
     }
 
     private function Init() {
@@ -36,9 +41,12 @@ class Project {
     }
 
     public function GetInfo() {
-        $info_clean = $this->info_defaults($this -> info);
+        $this->info_defaults($this -> info, [
+            'description',
+            'version'
+        ]);
 
-        return $info_clean;
+        return $this -> info;
     }
     
     private function GetProjectFiles() {
