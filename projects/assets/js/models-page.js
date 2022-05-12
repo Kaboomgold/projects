@@ -2,6 +2,7 @@ import { Page } from "./page.js";
 import { ModelViewer } from "./model-viewer.js";
 import { Dom_Utils } from "../../../js/dom_utils.js";
 import { ScriptsViewer } from "./scripts-viewer.js";
+import { Info_Section_Handler } from "./info-section.js";
 
 class Models_Page extends Page {
     #model_viewer_container = this._page_domElement.querySelector('.model-viewer-container');
@@ -17,9 +18,14 @@ class Models_Page extends Page {
         this.#selected_model_loader();
         this.#setup_file_menu_events();
         this.#setup_animation_menu_selector();
+        this.#createInfoSections();
 
         const files = [...this._page_domElement.querySelectorAll('.file')]
         Dom_Utils.domElementSelector(files);
+    }
+
+    #createInfoSections() {
+        const info_sections = this._page_domElement.querySelectorAll('info-container');
     }
 
     #setup_animation_menu_selector() {
@@ -55,8 +61,12 @@ class Models_Page extends Page {
                 const fileName = file.querySelector('p').textContent;
                 const texture_viewer = this.#model_viewer_container.querySelector('.texture-viewer');
 
+                this.#model_viewer_container.setAttribute('file-data', fileName);
+                const info_section_handler = new Info_Section_Handler(fileName);
+
                 let path = '';
 
+                // path to the file based on the structure of the file-menu
                 function getPath(element){
 
                     if(parent = element.parentElement) {

@@ -10,7 +10,9 @@ $model_names = FileHandler::GetFilesFromDir(ASSETS_DIR);
 
 $models_structure = FileHandler::GetFileStucture(ASSETS_DIR);
 
+$file_id = 0;
 function CreateFileMenu(array $arr, $folder_name = '') {
+    global $file_id;
 
     $html = '<ul class="menu">';
 
@@ -18,7 +20,8 @@ function CreateFileMenu(array $arr, $folder_name = '') {
         if(is_array($item)) {
             $html .= '<li class="sub-menu"><div class="folder"><p>'.$folder_name.'</p></div>'.CreateFileMenu($item, $folder_name).'</li>';
         } else {
-            $html .= '<li><div class="file" ><p>'.$item.'</p></div></li>';
+            $html .= '<li><div class="file" file-id="'.$file_id.'"><p>'.$item.'</p></div></li>';
+            $file_id++;
         }
     }
 

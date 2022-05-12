@@ -9,12 +9,8 @@
         </div>
 
 
-        <div class="info-section">
-            <div>
-                <p>description:</p>
-                <textarea name="description" id="description"></textarea>
-            </div>
-            <button type="button" class="update">Update</button>
+        <div class="info-container">
         </div>
+        
     </div>
 </div>
