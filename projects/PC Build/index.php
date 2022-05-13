@@ -1,20 +1,22 @@
 <?php
     include_once './php/autloader.class.php';
-    Autoloader::recursive_include('./php/');
+    Autoloader::recursive_include('./php/', [
+        'pc' => 30,
+        'pc-part' => 20
+    ]);
 
-    use PC_Builder\PC\PC_Part\Processor as Processor;
+    use PC_Builder\PC\PC_Part\Part\Processor;
 
-
-    $intel_core_i7_10700KF = new Processor\Processor('intel_core_i7_10700KF', 329);
+    $intel_core_i7_10700KF = new Processor('intel_core_i7_10700KF', 329);
     $intel_core_i7_10700KF -> set_stats([
-        Processor\Processor::$CLOCK_SPEED => 3.8,
-        Processor\Processor::$OVERCLOCKABLE => true,
-        Processor\Processor::$TURBO_SPEED => 5,
-        Processor\Processor::$MAXIMUM_POWER_CONSUMPTION => 125,
-        Processor\Processor::$CACHE_MEMORY => 16,
-        Processor\Processor::$SOCKET => '1200(10th gen intel)',
-        Processor\Processor::$CORES => 8,
-        Processor\Processor::$THREADS => 16
+        Processor::CLOCK_SPEED => 3.8,
+        Processor::OVERCLOCKABLE => true,
+        Processor::TURBO_SPEED => 5,
+        Processor::MAXIMUM_POWER_CONSUMPTION => 125,
+        Processor::CACHE_MEMORY => 16,
+        Processor::SOCKET => '1200(10th gen intel)',
+        Processor::CORES => 8,
+        Processor::THREADS => 16
     ]);
 
     echo '<pre>'.print_r($intel_core_i7_10700KF -> get_stats(), true).'</pre>';
