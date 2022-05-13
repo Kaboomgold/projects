@@ -23,11 +23,11 @@
             $info = $project -> GetInfo();
             ?>
             <div class="project">
-                <div >
-                    <p><?=$info['version']?></p>
-                </div>
                 <div class="name">
                     <h2><?=$project->Name(); ?></h2>
+                </div>
+                <div >
+                    <p><?=$info['version']?></p>
                 </div>
                 <div class="description">
                     <p><?=$info['description']; ?></p>

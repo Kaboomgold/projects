@@ -11,11 +11,11 @@ class Tommle_Parser {
 
             if(preg_match($line)){}
 
-            // comments:  #.+
-            // variables: \w+(?=\s=)
-            // non array values:    (?<== )[^\[].+
-            // classing:  [^= ]\[.+\]
-            // array values: (?<== )\[[\S\s]+?\]
+            // comments:         #.+
+            // variables:        \w+(?=\s=)
+            // non array values: (?<== )[^\[].+
+            // classing:         [^= ]\[.+\]
+            // array values:     (?<== )\[[\S\s]+?\]
 
         }
 
