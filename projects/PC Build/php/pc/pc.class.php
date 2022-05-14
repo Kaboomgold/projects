@@ -1,7 +1,7 @@
 <?php
 
 namespace PC_Builder\PC {
-    use PC_Builder\PC\PC_Part;
+    use PC_Builder\PC\PC_Part\PC_Part;
 
     class PC {
         private array $parts = [];
@@ -9,12 +9,12 @@ namespace PC_Builder\PC {
         private array $processors = [];
 
         public function add_pc_part(PC_Part $part) {
-            $this -> total_price += $part.price();
-            $this -> parts[$part -> type()][] = $part;
+            $this -> total_price += $part-> get_price();
+            $this -> parts[$part -> get_type()][] = $part;
         }
 
-        public function get_total_price() : float {
-            return $total_price;
+        public function get_price() : float {
+            return $this -> total_price;
         }
     }
 

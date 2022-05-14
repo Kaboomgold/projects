@@ -6,6 +6,7 @@ namespace PC_Builder\PC\PC_Part\Part {
 
     class Ram extends PC_Part {
 
+        // stats
         const INTERNAL_RAM = 'internal_ram';
         const STORAGE_SUITABLE_FOR = 'storage_suitable_for';
         const MEMORY_COMPOSITION = 'memory_composition';
@@ -17,24 +18,9 @@ namespace PC_Builder\PC\PC_Part\Part {
         const COMPATIBLE_WITH_OPERATING_SYSTEM = 'compatible_with_operating_system';
         const PINS = 'pins';
 
-        private function set_stat_defaults() {
-            $this -> stats = [
-                'internal_ram' => '',
-                'storage_suitable_for' => '',
-                'memory_composition' => '',
-                'ram_memory_type' => '',
-                'cas_latency_memory_module' => '',
-                'memory_type' => '',
-                'memory_speed' => '',
-                'voltage_ram' => '',
-                'compatible_with_operating_system' => '',
-                'pins' => '',
-            ];
-        }
-
         public function __construct() {
             $this -> type = PC_Part_type::RAM;
-            $this -> set_stat_defaults();
+            $this -> set_stat_defaults(__CLASS__);
         }
     }
 
