@@ -9,7 +9,6 @@ class Tommle_Parser {
         while(!feof($handle)) {
             $line = fgets($handle);
 
-            if(preg_match($line)){}
 
             // comments:         #.+
             // variables:        \w+(?=\s=)

@@ -28,6 +28,12 @@ class Models_Page extends Page {
     #add_info() {
         const section_selector = document.querySelector('.section-selector');
         const add_info_btn = document.querySelector('.add-info-button');
+        const info_section_popup = this._page_domElement.querySelector('.info-section-popup');
+        const open_popup_btn = this._page_domElement.querySelector('.info-section-popup-button');
+
+        open_popup_btn.onclick = () => {
+            info_section_popup.classList.toggle('open');
+        }
 
         Info_Section_Handler.section_classes.forEach(curr_class => {
             const option = document.createElement('option');
@@ -39,11 +45,9 @@ class Models_Page extends Page {
             if(this.#info_section_handler) {
                 this.#info_section_handler.add_info_section_by_info_type(section_selector.value);
             }
-            
         });
     }
     
-
     #setup_animation_menu_selector() {
         this.#model_viewer.on_model_loaded = (obj) => {
             const menu_items = obj.animation_menu.querySelectorAll('li');
@@ -78,7 +82,6 @@ class Models_Page extends Page {
                 const texture_viewer = this.#model_viewer_container.querySelector('.texture-viewer');
 
                 this.#model_viewer_container.setAttribute('file-data', fileName);
-                this.#info_section_handler = new Info_Section_Handler(fileName);
                 
                 let path = '';
 
@@ -98,6 +101,8 @@ class Models_Page extends Page {
                     }
                 }
                 getPath(file);
+
+                this.#info_section_handler = new Info_Section_Handler(path+fileName);
 
                 if(fileName.match(/.png|.jpg/)) {
 

@@ -9,14 +9,17 @@
         </div>
 
         <div class="info-section-wrapper">
-            <select class="section-selector">
 
-            </select>
+            <div class="info-section-popup">
+                <select class="section-selector"></select>
+                <button type="button" class="add-info-button">Add Info</button>
+            </div>
+            
+            <button type="button" class="info-section-popup-button"></button>
+
+            <div class="info-container">
+            </div>
         </div>
 
-        <button type="button" class="add-info-button">Add Info</button>
-        <div class="info-container">
-        </div>
-        
     </div>
 </div>

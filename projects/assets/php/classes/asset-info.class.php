@@ -9,7 +9,6 @@ class Asset_Info {
 
     private string $file_path = '';
     private string $name = '';
-    private $file_handle = null;
     private array $asset_info = [];
     private bool $file_exists = true;
 
@@ -25,6 +24,13 @@ class Asset_Info {
     }
 
     private function save() {
+
+        $dirname = dirname($this -> file_path);
+        if (!is_dir($dirname))
+        {
+            mkdir($dirname, 0755, true);
+        }
+
         $file_handle = fopen($this -> file_path, "w+");
         fwrite($file_handle, json_encode($this -> asset_info));
         fclose($file_handle);

@@ -62,6 +62,50 @@ class Dom_Utils {
             }, { signal: abort_controller.signal });
         });
     }
+
+    static element(element_obj) {
+        let element = document.createElement('div');
+
+        for( const [key, value] of Object.entries(element_obj)) {
+
+            switch(key) {
+                case 'tagName': {
+                    element = document.createElement(value);
+                }
+                    break;
+                case 'children': { 
+                    let child_type = 'append';
+
+                    if(typeof(value) == 'array') {
+                        for(let i = 0; i < value.length; i++) {
+
+                            if(value[i] == 'prepend') {
+                                child_type = 'prepend';
+                            } else if (value[i] == 'append') {
+                                child_type = 'prepend';
+                            }
+
+                            if(child_type == 'append') {
+                                element.append(value[i]);
+                            } else {
+                                element.prepend(value[i]);
+                            }
+                        }
+                    } else {
+                        element.append(value);
+                    }
+                    
+                }
+                    break;
+                default: {
+                    element[key] = value;
+                }
+            }
+
+        }
+
+        return element;
+    }
 }
 
 export { Dom_Utils };

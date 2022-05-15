@@ -1,5 +1,6 @@
 
 import { AjaxHandler } from "./ajax-handler.js";
+import { Dom_Utils } from "../../../js/dom_utils.js";
 
 class Info_Section_Handler {
 
@@ -112,6 +113,103 @@ class Info_Section {
         AjaxHandler.Ajax_JSON_Request(Info_Section_Handler.info_section_ajax_handler, response => {
             console.log(response);
         }, this.#create_section_obj('remove'));
+    }
+
+}
+
+class Info_Section_function extends Info_Section {
+
+    #input = document.createElement('textarea');
+    #update_btn = document.createElement('button');
+    #delete_btn = Dom_Utils.element({
+        tagName: 'button',
+        className: 'update',
+        textContent: 'Update'
+    });
+
+    #types = ['int', 'bool', 'array', 'float', 'double'];
+    static INFO_TYPE = "function";
+
+    static { this.initialize(this) }
+
+    constructor(asset_name) {
+        super(asset_name);
+        this.#init_elements();
+        this.#add_delete_event();
+        this.#add_update_event();
+    }
+
+    #init_elements() {
+        const wrapper = document.createElement('div');
+
+        this.#input.name = 'function';
+        this.#input.id = 'function';
+
+        this.#update_btn.type = 'button';
+        this.#update_btn.className = 'update';
+        this.#update_btn.textContent = 'Update';
+        
+        this.#delete_btn.type = 'button';
+        this.#delete_btn.className = 'delete';
+        this.#delete_btn.textContent = 'Delete';
+
+        const function_type = Dom_Utils.element({
+            tagName: 'select',
+        });
+
+        this.#types.forEach(type => {
+            function_type.append(Dom_Utils.element({
+                tagName: 'option',
+                textContent: type
+            }));
+        });
+
+        // description
+        // notes
+        // return type
+        // name
+        // parameters
+        // inner body
+        // use case
+        // function type
+        // accesability
+        // references
+
+        wrapper.append(this.#input, function_type);
+        this._section_element.append(wrapper, this.#update_btn, this.#delete_btn);
+    }
+
+    #description() {
+        
+    }
+
+    #notes() {
+
+    }
+
+    #return_type() {
+
+    }
+
+    #name() {
+
+    }
+
+    #add_update_event() {
+        this.#update_btn.addEventListener('click', e => {
+            this.section_value = this.#input.value;
+            this.Update();
+        });
+    }
+
+    #add_delete_event() {
+        this.#delete_btn.addEventListener('click', e => {
+            this.Remove();
+        });
+    }
+
+    set_value(value) {
+        this.#input.value = value;
     }
 
 }
