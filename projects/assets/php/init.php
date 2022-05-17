@@ -1,5 +1,5 @@
 <?php
-include_once '../../php/utility.php';
+include_once './php/classes/file-handler.class.php';
 include_once './php/colorizer/colorizer.php';
 
 

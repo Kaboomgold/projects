@@ -1,0 +1,43 @@
+
+#product-table {
+    margin: 0 auto;
+    width: 80%;
+}
+
+#product-table > table, #product-table > table th, #product-table > table td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+#product-table > table {
+    width: 100%;
+}
+
+#product-table > table td, #product-table > table th {
+    width: 20%;
+}
+
+
+#product-listing {
+    display: flex;
+    flex-direction: column; 
+    background-color: lightgray;
+}
+
+#product-listing > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 3px 3px 0px 3px;
+}
+
+#product-listing > div:last-of-type {
+    margin-bottom: 3px;
+}
+
+#product-listing > div > input {
+    margin: 0px;
+    padding: 0px;
+    flex: 1;
+}

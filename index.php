@@ -1,4 +1,10 @@
-<?php include_once './php/init.php'; ?>
+<?php 
+    include_once './php/init.php'; 
+    use Main\Main;
+
+    $main = new Main;
+    $projects = $main->get_projects();
+?>
 
 <!DOCTYPE html>
 <html lang="en">

@@ -20,9 +20,15 @@ class Autoloader {
 
         foreach($priority as $file_name => $score) {
             foreach($file_paths as $key => &$path) {
-                if(preg_match('/'.$file_name.'\.(?!:\.php)/', $path['path'])) {
-                    $path['score'] = $score;
+                if($file_name == 'ign') {
+                    
+                } else {
+                    if(preg_match('/'.$file_name.'\.(?!:\.php)/', $path['path'])) {
+                        $path['score'] = $score;
+                    }
                 }
+
+                
             }
         }
 

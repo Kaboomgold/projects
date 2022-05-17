@@ -119,7 +119,10 @@ class Info_Section {
 
 class Info_Section_function extends Info_Section {
 
-    #input = document.createElement('textarea');
+    static section_id = 0;
+
+    #wrapper = document.createElement('div');
+    #inputs = {};
     #update_btn = document.createElement('button');
     #delete_btn = Dom_Utils.element({
         tagName: 'button',
@@ -137,13 +140,11 @@ class Info_Section_function extends Info_Section {
         this.#init_elements();
         this.#add_delete_event();
         this.#add_update_event();
+        this.#description();
+        Info_Section_function.section_id++;
     }
 
     #init_elements() {
-        const wrapper = document.createElement('div');
-
-        this.#input.name = 'function';
-        this.#input.id = 'function';
 
         this.#update_btn.type = 'button';
         this.#update_btn.className = 'update';
@@ -153,16 +154,18 @@ class Info_Section_function extends Info_Section {
         this.#delete_btn.className = 'delete';
         this.#delete_btn.textContent = 'Delete';
 
-        const function_type = Dom_Utils.element({
+        const return_type = Dom_Utils.element({
             tagName: 'select',
         });
 
         this.#types.forEach(type => {
-            function_type.append(Dom_Utils.element({
+            return_type.append(Dom_Utils.element({
                 tagName: 'option',
                 textContent: type
             }));
         });
+
+        this.#inputs['return_type'] = return_type;
 
         // description
         // notes
@@ -175,12 +178,22 @@ class Info_Section_function extends Info_Section {
         // accesability
         // references
 
-        wrapper.append(this.#input, function_type);
-        this._section_element.append(wrapper, this.#update_btn, this.#delete_btn);
+        this.#wrapper.append(return_type);
+        this._section_element.append(this.#wrapper, this.#update_btn, this.#delete_btn);
     }
 
     #description() {
-        
+        const description_input = Dom_Utils.element({
+            tagName: 'textarea',
+            name: `function-description-${Info_Section_function.section_id}`,
+        });
+
+        const description = Dom_Utils.element({
+            children: description_input,
+        });
+
+        this.#inputs['description'] = description_input;
+        this.#wrapper.append(description);
     }
 
     #notes() {
@@ -197,7 +210,7 @@ class Info_Section_function extends Info_Section {
 
     #add_update_event() {
         this.#update_btn.addEventListener('click', e => {
-            this.section_value = this.#input.value;
+            // this.section_value = this.#input.value;
             this.Update();
         });
     }
@@ -209,7 +222,7 @@ class Info_Section_function extends Info_Section {
     }
 
     set_value(value) {
-        this.#input.value = value;
+        // this.#input.value = value;
     }
 
 }
