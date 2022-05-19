@@ -5,7 +5,6 @@
 		class DB_Table_Editor extends DB_Table {
 
 			public function AddRow(array $rowValues) {
-				$this->Open();
 				$headers = $this->tableHeaders;
 
 				$query = "INSERT INTO $this->name (`".$headers[0]."`";
@@ -26,20 +25,17 @@
 				
 				$stmnt = $this->dataBase->prepare($query);
 				$stmnt->execute($rowValues);
-				$this->Close();
-				$this->GenerateHTML();
+				// $this->GenerateHTML();
 			}
 
 			public function RemoveRow(array $rowValues) {
 
-				$this->Open();
 
 				$identifier = $this->headers[0];
 				$query = "";
 
 				if(is_array($rowValues)){
 					if(count($rowValues) == 0){
-						$this->Close();
 						return;
 					}
 					for($i = 0; $i < count($rowValues); $i++){
@@ -62,9 +58,7 @@
 				$stmnt = $this->dataBase->prepare($query);
 
 				$stmnt->execute();
-				$this->GenerateHTML();
 
-				$this->Close();
 			}
 		}
 	}

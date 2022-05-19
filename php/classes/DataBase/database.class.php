@@ -10,11 +10,11 @@
             private $isOpen = false;
             public $prefix;
 
-            public function __construct(array $login) {
-                $this->name = $login[0];
-                $this->host = $login[1];
-                $this->userName = $login[2];
-                $this->password = $login[3];
+            public function __construct(string $name, string $host, string $userName, string $password) {
+                $this->name = $name;
+                $this->host = $host;
+                $this->userName = $userName;
+                $this->password = $password;
             }
 
             public function GetDataBase(){

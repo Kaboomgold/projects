@@ -4,8 +4,7 @@
 namespace Utility\AutoLoaders {
     class Autoload_Controller {
         static function recursive_include(string $dir, array $priority = []) {
-            $AL = new \Utility\AutoLoaders\Autoloader_Recursive();
-            $AL -> init($dir, $priority);
+            $AL = new \Utility\AutoLoaders\Autoloader_Recursive($dir, $priority);
         }
     }
 
@@ -16,7 +15,7 @@ namespace Utility\AutoLoaders {
         private $file_paths = [];
         private $filtered_file_paths = [];
 
-        public function init(string $dir, array $priority) {
+        public function __construct(string $dir, array $priority) {
             $this -> dir = $dir;
             $this -> priority = $priority;
 

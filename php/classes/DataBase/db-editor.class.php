@@ -9,7 +9,7 @@
             public function GetAllTablesNames() {
                 try {
                     $this->IsOpen();     
-                } catch (\Exception $e){
+                } catch (\Exception $e) {
                     echo 'Caught exception: '.$e->getMessage();
                     exit();
                 }
@@ -17,8 +17,7 @@
                 $stmt = $this->dataBase->query('SHOW TABLES');
                 $tables = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
-
-                if($this->prefix != null){
+                if($this->prefix != null) {
                     $prefixedTables = [];
                     
                     foreach ($tables as $table) {
@@ -41,7 +40,11 @@
                     exit();
                 }
 
-                return new DB_Table($tableName, $this->dataBase);  
+                $this -> Open();
+                $table = new DB_Table($tableName, $this->dataBase);
+                $this -> Close();
+
+                return $table;  
             }
 
             public function DropTable($tableName) {
@@ -51,7 +54,7 @@
             }
 
             public function CreateTable(DB_Table_Query $table) {
-                $sql = $table->GetTableQuery();
+                $sql = $table->get_table_query();
                 $stmnt = $this->dataBase->prepare($sql);
                 $stmnt->execute();
             }
