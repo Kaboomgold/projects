@@ -2,7 +2,7 @@
     namespace DataBase\Editor {
         use DataBase\DataBase;
         use DataBase\DB_Table;
-        use DataBase\Querys\DB_Table_Query;
+        use DataBase\Querys\Create_Table_Query;
 
         Class DB_Editor extends DataBase {
 
@@ -53,8 +53,8 @@
                 $stmnt->execute();
             }
 
-            public function CreateTable(DB_Table_Query $table) {
-                $sql = $table->get_table_query();
+            public function CreateTable(Create_Table_Query $table) {
+                $sql = $table->get_sql();
                 $stmnt = $this->dataBase->prepare($sql);
                 $stmnt->execute();
             }

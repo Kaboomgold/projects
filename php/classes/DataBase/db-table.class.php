@@ -2,7 +2,7 @@
 
 	namespace DataBase {
 		use DataBase\Querys\DB_Table_Row;
-		use DataBase\Querys\DB_Table_Query;
+		use DataBase\Querys\Create_Table_Query;
 
 		class DB_Table {
 			use \DataBase\HTML\HTML_Table;
@@ -43,7 +43,7 @@
 			// }
 
 			private function generate_sql() {
-				$db_t_q = new DB_Table_Query('test');
+				$db_t_q = new Create_Table_Query('test');
 
 				foreach($this -> tableValues as $value) {
 					$index = 0;
@@ -69,7 +69,7 @@
 
 				}
 
-				$this -> table_sql = $db_t_q -> get_table_query();
+				$this -> table_sql = $db_t_q -> get_sql();
 			}
 
 			public function get_sql() {

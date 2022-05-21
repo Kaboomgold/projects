@@ -3,9 +3,7 @@ namespace Main {
     use Project\Projects_Manager;
     use Utility\AutoLoaders\Autoload_Controller;
     use DataBase\Editor\DB_Editor;
-    use DataBase\Querys\DB_Table_Row;
-    use DataBase\Querys\DB_Table_Column;
-    use DataBaseEditor;
+    use Debug\Debug;
 
     class Main {
 
@@ -13,6 +11,11 @@ namespace Main {
         {
             $this -> include_files();
             $this -> database_test();
+
+            // $Directory = new \RecursiveDirectoryIterator('./php');
+            // echo '<>'
+
+            
         }
 
         private function include_files() {
@@ -31,17 +34,8 @@ namespace Main {
             $test_table = $db_e->GetTable('test');
             $db_e -> Close();
 
-            $table_row = new DB_Table_Row([
-                'age' => 22,
-                'name' => 'eloy',
-                'smart' => true
-            ]);
-
-            $table_row->headers = ['age', 'name', 'smart'];
-
-            $table_column = new DB_Table_Column('age', 'int', 8, false);
-
-            echo '<pre>'.print_r($table_column->get_sql(), true).'</pre>';
+            Debug::log(['simple'=>'test'], 'test');
+            Debug::show();
         }
 
         public function get_projects() {

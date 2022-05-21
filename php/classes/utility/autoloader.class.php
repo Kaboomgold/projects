@@ -15,6 +15,16 @@ namespace Utility\AutoLoaders {
         private $file_paths = [];
         private $filtered_file_paths = [];
 
+        /**
+         * Includes all php files starting from the root dir.
+         * 
+         * Root directory where the scan starts.
+         * @param string $dir 
+         * 
+         * As associative array with as key the file name and as value the score.
+         * Files with higher scores will be included first.
+         * @param array $priority 
+         */
         public function __construct(string $dir, array $priority) {
             $this -> dir = $dir;
             $this -> priority = $priority;
