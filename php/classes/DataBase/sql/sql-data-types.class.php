@@ -5,7 +5,7 @@
 		 * The descriptions and data types where taken from 
 		 * @link https://www.w3schools.com/sql/sql_datatypes.asp
 		 */
-		class Data_Types {
+		class SQL_Data_Types {
 			/**
 			 * A FIXED length string (can contain letters, numbers, and special characters). 
 			 * The size parameter specifies the column length in characters.

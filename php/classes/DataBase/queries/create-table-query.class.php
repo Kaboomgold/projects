@@ -2,26 +2,44 @@
     namespace DataBase\Querys {
         class Create_Table_Query {
             private $name = '';
-            private $tableValues = '';
+            private $table_columns = [];
             private $table_rows = [];
-            private $row_count = 0;
+            private $column_count = 0;
+            private $headers = [];
 
             public function __construct(string $tableName) {
                 $this->name = $tableName;
             }
 
-            public function add_row(Create_Table_Column_Query $row){
-                $this-> table_rows[] = $row;
-                $this->row_count++;
+            public function set_headers(array $headers) {
+                $this -> headers = $headers;
+            }
+
+            public function add_column($header_name, $type = null, $length = null) {
+                $column = null;
+
+                if($header_name instanceof Create_Table_Column_Query) {
+                    $column = $header_name;
+                } else {
+                    $column = new Create_Table_Column_Query($header_name, $type, $length);
+                }
+
+                $this-> table_columns[] = $column;
+                $this->column_count++;
+
+                return $column;
+            }
+
+            public function add_row($row) {
             }
 
             public function get_sql() : string {
-                $table_query = "CREATE TABLE $this->name (\n\r";
+                $table_query = "CREATE TABLE IF NOT EXISTS $this->name (\n\r";
 
-                foreach($this->table_rows as $curr_count => $table_row) {
+                foreach($this->table_columns as $curr_count => $table_row) {
                     $table_query .= $table_row->get_sql();
 
-                    if($this->row_count-1 == $curr_count) {
+                    if($this->column_count-1 == $curr_count) {
                         $table_query .= " \n\r";
                     } else {
                         $table_query .= ", \n\r";

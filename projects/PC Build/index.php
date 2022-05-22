@@ -5,7 +5,8 @@
         'pc-part' => 20
     ]);
 
-    use PC_Builder\PC\PC_Part\Part\Motherboard;
+use Debug\Debug;
+use PC_Builder\PC\PC_Part\Part\Motherboard;
     use PC_Builder\PC\PC_Part\Part\Processor;
 
     $intel_core_i7_10700KF = new Processor('intel_core_i7_10700KF', 329);
@@ -43,8 +44,9 @@
         Motherboard::NUMBER_OF_ETHERNET_PORTS => 1
     ]); 
 
-    echo '<pre>'.print_r($intel_core_i7_10700KF -> get_stats(), true).'</pre>';
-    echo '<pre>'.print_r($MSI_MPG_Z490_GAMING_PLUS -> get_stats(), true).'</pre>';
+    Debug::log($intel_core_i7_10700KF -> get_stats(), 'processor');
+    Debug::log($MSI_MPG_Z490_GAMING_PLUS -> get_stats(), 'motherboard');
+    Debug::show();
 ?>
 
 <!DOCTYPE html>

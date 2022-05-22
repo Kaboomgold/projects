@@ -1,5 +1,7 @@
 <?php
 namespace Main {
+
+    use Autherization\Autherization;
     use Project\Projects_Manager;
     use Utility\AutoLoaders\Autoload_Controller;
     use DataBase\Editor\DB_Editor;
@@ -15,7 +17,9 @@ namespace Main {
             // $Directory = new \RecursiveDirectoryIterator('./php');
             // echo '<>'
 
-            
+            Debug::log('There are three settings.');
+
+            Debug::show();
         }
 
         private function include_files() {
@@ -28,14 +32,7 @@ namespace Main {
         }
 
         private function database_test() {
-            $db_e = new DB_Editor('test', 'localhost', 'root', '');
-
-            $db_e -> Open();
-            $test_table = $db_e->GetTable('test');
-            $db_e -> Close();
-
-            Debug::log(['simple'=>'test'], 'test');
-            Debug::show();
+            $auth = new Autherization();
         }
 
         public function get_projects() {
