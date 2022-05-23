@@ -3,6 +3,8 @@
         use DataBase\DataBase;
         use DataBase\DB_Table;
         use DataBase\Querys\Create_Table_Query;
+        use Exception;
+    use PHP_Debug\Debug;
 
         Class DB_Editor extends DataBase {
 
@@ -33,12 +35,12 @@
             }
 
             public function GetTable(string $tableName) {
-                try {
-                    $this->IsOpen();
-                } catch (\Exception $e){
-                    echo 'Caught exception: '.$e->getMessage();
-                    exit();
-                }
+                // try {
+                //     $this->IsOpen();
+                // } catch (\Exception $e){
+                //     echo 'Caught exception: '.$e->getMessage();
+                //     exit();
+                // }
 
                 $this -> Open();
                 $table = new DB_Table($tableName, $this->dataBase);
@@ -49,14 +51,30 @@
 
             public function DropTable($tableName) {
                 $sql = "DROP TABLE $tableName ";
+                
+                $this->Open();
+
                 $stmnt = $this->dataBase->prepare($sql);
                 $stmnt->execute();
+
+                $this->Close();
             }
 
             public function CreateTable(Create_Table_Query $table) {
                 $sql = $table->get_sql();
-                $stmnt = $this->dataBase->prepare($sql);
-                $stmnt->execute();
+                $error = null;
+
+                $this->Open();
+                try {
+                    $stmnt = $this->dataBase->prepare($sql);
+                    $stmnt->execute();
+                    $stmnt = null;
+                } catch(Exception $e) {
+                    $error = $e;
+                }
+                $this->Close();
+
+                return ($error != null)? false : true;
             }
         }
     }

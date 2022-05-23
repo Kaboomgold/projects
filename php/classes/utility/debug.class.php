@@ -1,5 +1,5 @@
 <?php
-    namespace Debug {
+    namespace PHP_Debug {
         class Debug {
             private static $item_group_id = -1;
             private static $log_items = [];
@@ -10,7 +10,24 @@
                     self::$item_group_id++;
                 }
 
-                self::$log_items[$item_group_name][] = ['log' => print_r($item, true), 'item_group_id'=>self::$item_group_id];
+                $debug_info = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)[0];
+
+                ob_start(); ?>
+                <table>
+                    <tr>
+                        <td>logged in</td>
+                        <td>:</td>
+                        <td><?=$debug_info['file']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>on line</td>
+                        <td>:</td>
+                        <td><?=$debug_info['line']; ?></td>
+                    </tr>
+                </table>
+                <?php $debug_table = ob_get_clean();
+
+                self::$log_items[$item_group_name][] = ['log' => print_r($debug_table, true)."\n\r".'<pre>'.print_r($item, true).'</pre>', 'item_group_id'=>self::$item_group_id];
                 self::$log_id++;
             }
 
@@ -20,6 +37,8 @@
                     .debug-log {
                         min-width: 300px;
                         min-height: 220px;
+                        width: 300px;
+                        height: 220px;
                         background-color: gray;
                         border-radius: 20px;
                         position: fixed;
@@ -31,6 +50,7 @@
                         display: flex;
                         flex-direction: column;
                         box-sizing: border-box;
+                        font-family: system-ui;
                     }
 
                     .debug-log .debug-log-top {
@@ -44,7 +64,6 @@
                     }
 
                     .debug-log .logs-wrapper {
-                        padding: 5px;
                         overflow: auto;
                         color: greenyellow;
                         height: 100%;
@@ -62,21 +81,27 @@
 
                     .debug-log .logs-wrapper .log-menu {
                         border-bottom: 1px solid yellowgreen;
+                        position: sticky;
+                        top: 0px;
+                        background-color: black;
                     }
 
                     .debug-log .logs-wrapper .log-menu ul {
                         margin: 0px;
-                        padding: 0px;
+                        padding: 5px;
                         list-style-type: none;
                         display: flex;
-                        margin-bottom: 5px;
                     }
 
                     .debug-log .logs-wrapper .log-menu ul li {
                         margin: 0px;
                         border: 2px solid greenyellow;
                         padding: 5px;
-                        margin-left: 3px;
+                        margin-left: 5px;
+                    }
+
+                    .debug-log .logs-wrapper .log-menu ul li:first-child {
+                        margin-left: 0px;
                     }
 
                     .debug-log .logs-wrapper .log-menu ul li:hover {
@@ -98,8 +123,15 @@
                         display: block;
                     }
 
+                    .debug-log .logs-wrapper .logs table td {
+                        color: yellowgreen;
+                        padding-right: 5px;
+                    }
+
                     .debug-log .logs-wrapper pre {
                         margin: 0px;
+                        font-family: system-ui;
+                        margin-top: 10px;
                     }
                 </style>
                 <?php
@@ -203,7 +235,6 @@
                                 active_log_menu_item = log_menu_item;
 
                                 if(active_log_items) {
-                                    console.log(active_log_items);
                                     active_log_items.forEach(active_log_item => {
                                         active_log_item.classList.remove('active');
                                     });
@@ -220,6 +251,17 @@
                         });
                     }
 
+                    function deleteAllCookies() {
+                        var cookies = document.cookie.split(";");
+
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i];
+                            var eqPos = cookie.indexOf("=");
+                            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                        }
+                    }
+
                     function save_debug_settings() {
                         const {width, height, left, top} = debug_logger.getBoundingClientRect();
 
@@ -231,10 +273,16 @@
                         }
 
                         localStorage.setItem('debug_log_saved_settings', JSON.stringify(debug_settings));
+                        document.cookie = `debug_log_saved_settings=${JSON.stringify(debug_settings)};path=http://localhost/`;
                     }
 
                     function load_debug_settings() {
-                        const debug_log_saved_settings = JSON.parse(localStorage.getItem('debug_log_saved_settings'));
+
+                        let debug_log_saved_settings = JSON.parse(localStorage.getItem('debug_log_saved_settings'));;
+                        if(document.cookie) {
+                            const settings_json = document.cookie.match(/(?<==).+/);
+                            debug_log_saved_settings = JSON.parse(settings_json);
+                        }
 
                         if(debug_log_saved_settings) {
                             debug_logger.style.width = `${debug_log_saved_settings.width}px`;
@@ -251,6 +299,8 @@
                     resizer(debug_logger, 30);
                     select_show();
                     load_debug_settings();
+
+
 
                     window.addEventListener('mouseup', e => {
                         save_debug_settings();
@@ -303,7 +353,7 @@
                                 ?>
 
                                     <div class="log <?=($log['item_group_id'] == 0)? 'active' : ''; ?>" data-log-id="<?=$log['item_group_id']; ?>">
-                                        <pre><?=$log['log']; ?></pre>
+                                        <?=$log['log']; ?>
                                     </div>
                                 
                             <?php   } 

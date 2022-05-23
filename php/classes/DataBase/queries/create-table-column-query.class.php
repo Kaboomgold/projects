@@ -9,7 +9,7 @@
             private $auto_increment = '';
             
 
-            public function __construct(string $headerName, string $type, string $length){
+            public function __construct(string $headerName, string $type, string $length = ''){
                 $this->headerName = $headerName;
                 $this->type = $type;
                 $this->length = $length;

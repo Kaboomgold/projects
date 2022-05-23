@@ -5,8 +5,8 @@
         'pc-part' => 20
     ]);
 
-use Debug\Debug;
-use PC_Builder\PC\PC_Part\Part\Motherboard;
+    use PHP_Debug\Debug;
+    use PC_Builder\PC\PC_Part\Part\Motherboard;
     use PC_Builder\PC\PC_Part\Part\Processor;
 
     $intel_core_i7_10700KF = new Processor('intel_core_i7_10700KF', 329);

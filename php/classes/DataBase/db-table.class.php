@@ -1,8 +1,7 @@
 <?php
 
 	namespace DataBase {
-		use DataBase\Querys\DB_Table_Row;
-		use DataBase\Querys\Create_Table_Query;
+		use PHP_Debug\Debug;
 
 		class DB_Table {
 			use \DataBase\HTML\HTML_Table;
@@ -19,57 +18,37 @@
 				$this->name = $tableName;
 				$this->get_values();
 				$this->get_headers();
-				$this->generate_sql();
-				// $this->GenerateHTML();
+				// $this->generate_sql();
 			}
 
-			// protected function GenerateHTML() {
-			// 	$headings = $this->tableHeaders;
-
-			// 	array_push($headings, 'delete');
-
-			// 	foreach($this -> tableValues as &$tableContent){
-			// 		$rowId = [];//$tableContent[$headings[0]];
-
-			// 		for($i = 0; $i < count($tableContent); $i++) {
-			// 			$rowId[] = $tableContent[$headings[$i]];
-			// 		}
-
-			// 		$tableContent['delete'] = '<input type="checkbox" class="delete-toggle" rowid="'.htmlspecialchars(json_encode($rowId)).'">';
-			// 	}
-
-			// 	$this->caption = $this->name;
-			// 	$this->BuildTable($this -> tableValues, $headings);
-			// }
+			protected function get_table_as_html() {
+				$this->caption = $this->name;
+				$this->build_table($this -> tableValues, $this->tableHeaders);
+				return $this->get_html_markup();
+			}
 
 			private function generate_sql() {
-				$db_t_q = new Create_Table_Query('test');
 
 				foreach($this -> tableValues as $value) {
 					$index = 0;
+					Debug::log($this -> tableHeaders, 'row headers');
 
 					foreach($value as $header => $val) {
 						$row_header = $this -> tableHeaders[$index];
 					
 						preg_match_all('/^\w+|(?<=\().+(?=\))/', $row_header['Type'], $matches);
+
 						$type = $matches[0][0];
 						$length = $matches[0][1];
-						// echo '<pre>'.print_r($row_header, true).'</pre>';
 
 						if($row_header['Key'] == 'PRI') {
 							$row_header['Key'] = 'PRIMARY';
 						}
 
-						// $db_t_q->add_row(
-						// 	new DB_Table_Row($header, $type, $length, $row_header['Key'])
-						// );
-
 						$index++;
 					}
 
 				}
-
-				$this -> table_sql = $db_t_q -> get_sql();
 			}
 
 			public function get_sql() {
@@ -83,9 +62,9 @@
 			}
 
 			public function get_headers() {
-				$test = $this->database->Prepare("DESCRIBE $this->name");
-				$test->execute();
-				$this->tableHeaders = $test->fetchAll(\PDO::FETCH_ASSOC);
+				$headers = $this->database->prepare("DESCRIBE $this->name");
+				$headers->execute();
+				$this->tableHeaders = $headers->fetchAll(\PDO::FETCH_ASSOC);
 			}
 				
 			public function GetArray() : array {

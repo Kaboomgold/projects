@@ -15,14 +15,16 @@
                 $this -> headers = $headers;
             }
 
-            public function add_column($header_name, $type = null, $length = null) {
-                $column = null;
+            public function add_column($header_name, $type, $length = '') {
+                $column = new Create_Table_Column_Query($header_name, $type, $length);
 
-                if($header_name instanceof Create_Table_Column_Query) {
-                    $column = $header_name;
-                } else {
-                    $column = new Create_Table_Column_Query($header_name, $type, $length);
-                }
+                $this-> table_columns[] = $column;
+                $this->column_count++;
+
+                return $column;
+            }
+
+            public function add_column_obj(Create_Table_Column_Query $column) {
 
                 $this-> table_columns[] = $column;
                 $this->column_count++;

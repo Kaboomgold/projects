@@ -5,7 +5,7 @@ namespace Main {
     use Project\Projects_Manager;
     use Utility\AutoLoaders\Autoload_Controller;
     use DataBase\Editor\DB_Editor;
-    use Debug\Debug;
+    use PHP_Debug\Debug;
 
     class Main {
 
@@ -13,11 +13,6 @@ namespace Main {
         {
             $this -> include_files();
             $this -> database_test();
-
-            // $Directory = new \RecursiveDirectoryIterator('./php');
-            // echo '<>'
-
-            Debug::log('There are three settings.');
 
             Debug::show();
         }

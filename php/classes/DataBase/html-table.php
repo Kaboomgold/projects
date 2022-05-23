@@ -45,12 +45,12 @@
             protected $headers;
             public $caption;
 
-            public function BuildTable(array $array, array $headers = []){
+            public function build_table(array $array, array $headers = []){
                 $this->array = $array;
                 $this->headers = $headers;
             }
 
-            public function GetHTMLMarkup(){
+            public function get_html_markup(){
                 $table = '<table>';
 
                 if(!empty($this->caption)){
