@@ -1,36 +1,23 @@
 <?php
 	namespace DataBase\Editor {
 		use DataBase\DB_Table;
+    use PDOException;
 
 		class DB_Table_Editor extends DB_Table {
 
-			public function AddRow(array $rowValues) {
-				$headers = $this->tableHeaders;
+			public function add_row(array $rowValues) {
+				$rowValuesCount = count($rowValues)-1;
+				$query = "INSERT INTO $this->name VALUES (";
 
-				$query = "INSERT INTO $this->name (`".$headers[0]."`";
-				if(count($headers) > 1){
-					for($i = 1; $i < count($headers); $i++){
-						$query .= ", `$headers[$i]`";
-					}
+				for($i = 0; $i <= $rowValuesCount; $i++) {
+					$query .= ($i != $rowValuesCount)? '?,' : '?);';
 				}
-
-				$query .= ") VALUES (?";
-				if(count($rowValues) > 1){
-					for($i = 1; $i < count($rowValues); $i++){
-						$query .= ',?';
-					}
-				}
-				$query .= ');';
-
 				
-				$stmnt = $this->dataBase->prepare($query);
+				$stmnt = $this->database->prepare($query);
 				$stmnt->execute($rowValues);
-				// $this->GenerateHTML();
 			}
 
-			public function RemoveRow(array $rowValues) {
-
-
+			public function remove_row(array $rowValues) {
 				$identifier = $this->headers[0];
 				$query = "";
 
@@ -55,7 +42,7 @@
 					}
 				}
 
-				$stmnt = $this->dataBase->prepare($query);
+				$stmnt = $this->database->prepare($query);
 
 				$stmnt->execute();
 

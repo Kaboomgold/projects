@@ -4,11 +4,10 @@
         use DataBase\DB_Table;
         use DataBase\Querys\Create_Table_Query;
         use Exception;
-    use PHP_Debug\Debug;
 
         Class DB_Editor extends DataBase {
 
-            public function GetAllTablesNames() {
+            public function get_all_table_names() {
                 try {
                     $this->IsOpen();     
                 } catch (\Exception $e) {
@@ -34,22 +33,15 @@
                 return $tables;
             }
 
-            public function GetTable(string $tableName) {
-                // try {
-                //     $this->IsOpen();
-                // } catch (\Exception $e){
-                //     echo 'Caught exception: '.$e->getMessage();
-                //     exit();
-                // }
-
+            public function get_table(string $tableName, $db_table_class = DB_Table::class) {
                 $this -> Open();
-                $table = new DB_Table($tableName, $this->dataBase);
+                $table = new $db_table_class($tableName, $this->dataBase);
                 $this -> Close();
 
                 return $table;  
             }
 
-            public function DropTable($tableName) {
+            public function drop_table($tableName) {
                 $sql = "DROP TABLE $tableName ";
                 
                 $this->Open();
@@ -60,7 +52,7 @@
                 $this->Close();
             }
 
-            public function CreateTable(Create_Table_Query $table) {
+            public function create_table(Create_Table_Query $table) {
                 $sql = $table->get_sql();
                 $error = null;
 

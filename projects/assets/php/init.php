@@ -8,7 +8,7 @@ define('ASSETS_DIR', './src/assets');
 $pages = FileHandler::GetFilesFromDir('./pages');
 $model_names = FileHandler::GetFilesFromDir(ASSETS_DIR);
 
-$models_structure = FileHandler::GetFileStucture(ASSETS_DIR);
+$models_structure = FileHandler::GetFileStucture(ASSETS_DIR, 10);
 
 $file_id = 0;
 function CreateFileMenu(array $arr, $folder_name = '') {

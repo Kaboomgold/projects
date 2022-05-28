@@ -32,7 +32,8 @@
                 return $column;
             }
 
-            public function add_row($row) {
+            public function get_columns() : array {
+                return $this->table_columns;
             }
 
             public function get_sql() : string {

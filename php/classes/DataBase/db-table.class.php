@@ -1,24 +1,25 @@
 <?php
 
 	namespace DataBase {
-		use PHP_Debug\Debug;
+
+		use DataBase\Editor\DB_Table_Editor;
 
 		class DB_Table {
 			use \DataBase\HTML\HTML_Table;
 
 			protected $name;
 			protected $tableHeaders;
-			private $database = null;
+			protected $database = null;
 			private $tableValues = null;
 			private $table_sql = null;
+			private $editor = null;
 
 			public function __construct($tableName, $pdo){
-				$this -> database = $pdo;
-
+				$this->database = $pdo;
 				$this->name = $tableName;
+
 				$this->get_values();
 				$this->get_headers();
-				// $this->generate_sql();
 			}
 
 			protected function get_table_as_html() {
@@ -31,7 +32,6 @@
 
 				foreach($this -> tableValues as $value) {
 					$index = 0;
-					Debug::log($this -> tableHeaders, 'row headers');
 
 					foreach($value as $header => $val) {
 						$row_header = $this -> tableHeaders[$index];
@@ -58,7 +58,8 @@
 			public function get_values() {
 				$stmt = $this->database->prepare("SELECT * FROM $this->name WHERE 1");
 				$stmt->execute();
-				$this -> tableValues = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				$this->tableValues = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+				return $this->tableValues;
 			}
 
 			public function get_headers() {
@@ -66,13 +67,23 @@
 				$headers->execute();
 				$this->tableHeaders = $headers->fetchAll(\PDO::FETCH_ASSOC);
 			}
-				
-			public function GetArray() : array {
-				return $this->array;
-			}
 
 			public function GetHeaders() : array {
 				return $this->tableHeaders;
+			}
+
+			public function get_editor() : DB_Table_Editor {
+				if($this->editor == null) {
+					$this->editor = new DB_Table_Editor($this->name, $this->database);
+				}
+
+				return $this->editor;
+			}
+
+			public function get_query_result(string $sql, $fetch_type = \PDO::FETCH_ASSOC) {
+				$stmt = $this->database->prepare($sql);
+				$stmt->execute();
+				return $stmt->fetchAll($fetch_type);
 			}
 		}
 	}

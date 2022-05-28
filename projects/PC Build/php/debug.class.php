@@ -312,7 +312,7 @@
                 self::set_styling();
 
                 ?> 
-                <div class="debug-log"> 
+                <div class="debug-log" style="display: <?=(count(self::$log_items) > 0)? 'block': 'none';?>;"> 
                     <div class="debug-log-top">
                         <p>debug logger</p>
                     </div>
