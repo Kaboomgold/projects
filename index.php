@@ -1,6 +1,8 @@
 <?php 
-    include_once './php/init.php'; 
-    use Main\Main;
+    include_once './php/init.php';
+
+use Main\FormHandling;
+use Main\Main;
 
     $main = new Main;
     $projects = $main->get_projects();
@@ -22,26 +24,36 @@
         <h1>Projects</h1>
         <hr>
     </header>
+    <main>
+        <?php
+            if(!$main->user_is_logged_in()) { 
+                FormHandling::get_login_form();
+            } else {
+                FormHandling::get_logout_form();
+            }
+        ?>
 
-    <div id="projects">
+        <div id="projects">
 
-        <?php foreach($projects as $project) { 
-            $info = $project -> GetInfo();
-            ?>
-            <div class="project">
-                <div class="name">
-                    <h2><?=$project->Name(); ?></h2>
+            <?php foreach($projects as $project) { 
+                $info = $project -> GetInfo();
+                ?>
+                <div class="project">
+                    <div class="name">
+                        <h2><?=$project->Name(); ?></h2>
+                    </div>
+                    <div >
+                        <p><?=$info['version']?></p>
+                    </div>
+                    <div class="description">
+                        <p><?=$info['description']; ?></p>
+                    </div>
+                    <a href="<?=$project->GetUrl(); ?>"></a>
                 </div>
-                <div >
-                    <p><?=$info['version']?></p>
-                </div>
-                <div class="description">
-                    <p><?=$info['description']; ?></p>
-                </div>
-                <a href="<?=$project->GetUrl(); ?>"></a>
-            </div>
-        <?php } ?>
+            <?php } ?>
 
-    </div>
+        </div>
+    </main>
+    
 </body>
 </html>

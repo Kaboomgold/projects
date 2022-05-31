@@ -272,16 +272,11 @@
                     }
 
                     localStorage.setItem('debug_log_saved_settings', JSON.stringify(debug_settings));
-                    document.cookie = `debug_log_saved_settings=${JSON.stringify(debug_settings)};path=http://localhost/`;
                 }
 
                 function load_debug_settings() {
 
-                    let debug_log_saved_settings = JSON.parse(localStorage.getItem('debug_log_saved_settings'));;
-                    if(document.cookie) {
-                        const settings_json = document.cookie.match(/(?<==).+/);
-                        debug_log_saved_settings = JSON.parse(settings_json);
-                    }
+                    let debug_log_saved_settings = JSON.parse(localStorage.getItem('debug_log_saved_settings'));
 
                     if(debug_log_saved_settings) {
                         debug_logger.style.width = `${debug_log_saved_settings.width}px`;
@@ -298,8 +293,6 @@
                 resizer(debug_logger, 30);
                 select_show();
                 load_debug_settings();
-
-
 
                 window.addEventListener('mouseup', e => {
                     save_debug_settings();

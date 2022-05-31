@@ -20,35 +20,29 @@
             {   
                 $this->database_editor = new DB_Editor('projects', 'localhost', 'root', '');
                 $this->db_table_editor_users = $this->database_editor->get_table($this->users_table_name, DB_Table_Editor_Users::class);
-                
-                \Debug::log(($this->db_table_editor_users->remove_user('Eloy Bartels')));
+                $this->un_autherize_user();
                 
                 $this->create_users_table();
-                // $this->register_user('Eloy Bartels', 'eloy12', 'eloybartels@hotmail.com');
+
+                $this->autherize_user('Eloy Bartels', '2131321');
             }
 
-            public function autherize_user(string $user_name, string $password) {
-
-                $table_rows = $this->db_table_editor_users->get_values();
-
-                foreach($table_rows as $row) {
-
+            /**
+             * If the user exists checks if the password is valid.
+             * If password is valid set $_SESSION variable user_logged_in.
+             */
+            public function autherize_user(string $username, string $password) {
+                if($this->db_table_editor_users->user_exists($username)) {
+                    $hash = $this->db_table_editor_users->get_user_hash($username);
+                    
+                    if(password_verify($password, $hash)) {
+                        $_SESSION['user_logged_in'] = true;
+                    }
                 }
             }
 
-            public function validate_user(string $user_name, string $password)  {
-                $table_rows = $this->db_table_editor_users->get_values();
-
-                // foreach($table_rows as $row) {
-                //     if(password_verify($password, $row['password'])) {
-
-                //     }
-                // }
-
-            }
-
-            public function log_user_in(string $username, string $password) {
-
+            public function un_autherize_user() {
+                $_SESSION['user_logged_in'] = false;
             }
 
             public function register_user(string $username, string $password, string $e_mail) : bool {

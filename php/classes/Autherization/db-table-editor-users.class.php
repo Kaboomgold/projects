@@ -12,6 +12,12 @@ namespace Autherization\Tables {
             $result = ($this->get_query_result($sql, \PDO::FETCH_COLUMN)[0]);
             return $result;
         }
+        
+        public function get_user_hash(string $username) : string {
+            $sql = "SELECT password FROM $this->name WHERE username = '$username';";
+            $result = $this->get_query_result($sql, \PDO::FETCH_COLUMN)[0];
+            return $result;
+        }
 
         public function insert_user(string $username, string $password, string $e_mail) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
