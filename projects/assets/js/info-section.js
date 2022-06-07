@@ -4,7 +4,7 @@ import { Dom_Utils } from "../../../js/dom_utils.js";
 
 class Info_Section_Handler {
 
-    static info_section_ajax_handler = '../assets/php/ajax/add-info-section.php';
+    static info_section_ajax_handler = '../assets/php/_RIGN/ajax/add-info-section.php';
     static section_classes = [];
     #info_section_container = document.querySelector('.info-container');
     #target_asset_name = '';

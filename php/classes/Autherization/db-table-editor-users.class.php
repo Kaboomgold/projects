@@ -7,10 +7,15 @@ namespace Autherization\Tables {
 
     class DB_Table_Editor_Users extends DB_Table_Editor {
         
-        public function user_exists(string $username) : bool {
+        public function user_exists(string $username) {
             $sql = "SELECT COUNT(1) FROM $this->name WHERE username = '$username';";
-            $result = ($this->get_query_result($sql, \PDO::FETCH_COLUMN)[0]);
-            return $result;
+            $result = $this->get_query_result($sql, \PDO::FETCH_COLUMN);
+
+            if(count($result) > 0) {
+                return true;
+            }
+
+            return false;
         }
         
         public function get_user_hash(string $username) : string {

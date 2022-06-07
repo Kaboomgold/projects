@@ -35,6 +35,7 @@ class Models_Page extends Page {
             info_section_popup.classList.toggle('open');
         }
 
+        // Create options.
         Info_Section_Handler.section_classes.forEach(curr_class => {
             const option = document.createElement('option');
             option.textContent = curr_class.INFO_TYPE;

@@ -5,7 +5,7 @@
         <div class="model-viewer-container">
             <div class="script"></div>
             <div class="texture-viewer"></div>
-            <div class="file-menu"><button type="button" class="file-menu-close-btn">X</button> <?=CreateFileMenu($models_structure);?></div>
+            <div class="file-menu"><button type="button" class="file-menu-close-btn">X</button> <?=$main->get_file_menu();?></div>
         </div>
 
         <div class="info-section-wrapper">

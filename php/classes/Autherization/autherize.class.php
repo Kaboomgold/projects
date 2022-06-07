@@ -23,8 +23,6 @@
                 $this->un_autherize_user();
                 
                 $this->create_users_table();
-
-                $this->autherize_user('Eloy Bartels', '2131321');
             }
 
             /**

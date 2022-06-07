@@ -37,6 +37,8 @@ class ScriptsViewer {
     }
 
     viewScript(scriptName) {
+        //assets/scripts/InputManager.cs
+        console.log(scriptName);
         this.#getColorizedScript(scriptName, colorized_script => {
             this.#viewer.classList.add('viewing');
             this.#addColorizedScript(colorized_script);
@@ -44,7 +46,7 @@ class ScriptsViewer {
     }
 
     #getColorizedScript(script_name, callback) {
-        AjaxHandler.Ajax_JSON_Request(`./php/ajax/get-colorized-script-html.php`, colorized_script => {
+        AjaxHandler.Ajax_JSON_Request(`./php/_RIGN/ajax/get-colorized-script-html.php`, colorized_script => {
             callback(colorized_script);
         }, { script_name: script_name });
     }
