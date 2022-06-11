@@ -11,16 +11,25 @@ if(!empty($_POST['ajax_data'])) {
     $asset_info = new Asset_Info($data['name']);
 
     if($action == 'add') {
-        foreach($data['info_sections'] as $key => $value) {
-            if(in_array($key, Asset_Info::$allowed_sections)) {
-                $asset_info -> add_info_section($key, $value);
-            }
+        $id = $data['info_sections']['id'];
+        $info = $data['info_sections']['info'];
+
+        if(in_array($info['info_type'], Asset_Info::$allowed_sections)) {
+            $asset_info->add_info_section($id, $info);
         }
     }
 
     if($action == 'remove') {
-        foreach($data['info_sections'] as $key => $value) {
-            $asset_info -> remove_info_section($key);
+        $id = $data['info_sections']['id'];
+        $asset_info -> remove_info_section($id);
+    }
+
+    if($action == 'remove_key') {
+        $id = $data['info_sections']['id'];
+        $keys = $data['info_sections']['key'];
+
+        foreach($keys as $key) {
+            $asset_info -> remove_info_section_key($id, $key);
         }
     }
 

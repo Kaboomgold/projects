@@ -4,7 +4,8 @@ class Asset_Info {
     static $asset_info_folder = '';
     static $allowed_sections = [
         'description',
-        'name'
+        'name',
+        'function'
     ];
 
     private string $file_path = '';
@@ -49,8 +50,10 @@ class Asset_Info {
         }
     }
 
-    public function add_info_section(string $key, string $value) {
-        $this -> asset_info[$key] = $value;
+    public function add_info_section($info_section_id, $info) {
+
+        $this->asset_info[$info_section_id] = $info;
+        // $this -> asset_info[$key] = $value;
         $this -> save();
     }
 
@@ -58,6 +61,13 @@ class Asset_Info {
         if(!$this -> file_exists) return;
 
         unset($this -> asset_info[$section_name]);
+        $this -> save();
+    }
+
+    public function remove_info_section_key($section_name, $key) {
+        if(!$this -> file_exists) return;
+
+        unset($this -> asset_info[$section_name]['values'][$key]);
         $this -> save();
     }
 }
