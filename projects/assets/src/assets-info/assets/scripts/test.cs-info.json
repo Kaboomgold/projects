@@ -1,1 +1,1 @@
-{"1":{"info_type":"function","values":{"name_function":"awdaw","param_count":""}}}
+{"1":{"info_type":"function","values":{"name_function":"Test","return_type":"bool","function_description":"This is another test","data_type_0":"bool","variable_name_0":"This is a parameter","data_type_1":"int","variable_name_1":"ok"}},"2":{"info_type":"function","values":{"name_function":"Test2","return_type":"int","function_description":"Another test function lets see where this goes."}}}

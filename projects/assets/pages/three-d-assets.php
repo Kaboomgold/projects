@@ -17,41 +17,7 @@
             
             <button type="button" class="info-section-popup-button"></button>
 
-            <div class="info-container">
-
-                <div>
-                    <div>
-                        <!-- <p>function name(arg1, arg2) : void {</p> -->
-                        <div class="wrapper">
-                            <span>function</span>
-
-                            <input type="text" name="function_name">
-                            (
-                            <select name="arg_type-1">
-                                <option>int</option>
-                                <option>bool</option>
-                                <option>array</option>
-                                <option>float</option>
-                                <option>double</option>
-                            </select>
-                            <input type="text" name="arg_name-1">
-                            ) :  
-                            <select name="arg_type-1">
-                                <option>int</option>
-                                <option>bool</option>
-                                <option>array</option>
-                                <option>float</option>
-                                <option>double</option>
-                            </select>
-                        </div>
-                        <div>
-                            <textarea name="function-description-0"></textarea>
-                        </div>
-                    </div>
-                    <button type="button" class="update">Update</button>
-                    <button class="delete" type="button">Delete</button>
-                </div>
-            </div>
+            <div class="info-container"></div>
         </div>
 
     </div>

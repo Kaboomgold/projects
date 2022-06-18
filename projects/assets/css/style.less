@@ -485,3 +485,72 @@ body {
         transform: scale(1);
     }
 }
+
+.simple {
+    font-size: x-large;
+}
+
+.info-container {
+
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #d6d6d6;
+    font-size: x-large;
+
+    .info-section {
+        min-width: 450px;
+        margin-left: 20%;
+    }
+
+    input, select, textarea {
+        margin: 0px;
+        padding: 0px;
+        border: none;
+        font-size: inherit;
+        font-family: inherit;
+        min-width: 25px !important;
+        min-height: 20px !important;
+        background-color: transparent;
+    }
+
+    select, textarea {
+        appearance: none;
+    }
+
+    .function {
+
+        .keyword_function, .data-type, .return-type {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .function-description {
+            display: block;
+            width: 200px;
+        }
+
+        .parameter {
+            position: relative;
+
+            .param-btns {
+                height: 100%;
+            }
+
+            .add-param-button, .remove-param-button {
+                padding: 0px;
+                margin: 0px;
+                width: 15px;
+                height: 15px;
+                flex: 1;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

@@ -2,7 +2,7 @@ import { Page } from "./page.js";
 import { ModelViewer } from "./model-viewer.js";
 import { Dom_Utils } from "../../../js/dom_utils.js";
 import { ScriptsViewer } from "./scripts-viewer.js";
-import { Info_Section_Handler } from "./info-section.js";
+import { Info_Section_Handler } from "./info-section/info_section_handler.js";
 
 class Models_Page extends Page {
     #model_viewer_container = this._page_domElement.querySelector('.model-viewer-container');
@@ -30,17 +30,34 @@ class Models_Page extends Page {
         const add_info_btn = document.querySelector('.add-info-button');
         const info_section_popup = this._page_domElement.querySelector('.info-section-popup');
         const open_popup_btn = this._page_domElement.querySelector('.info-section-popup-button');
+        const solidify_btn = document.createElement('button');
+        solidify_btn.textContent = 'solidify';
+        solidify_btn.classList.add('solidify-btn');
+        document.body.append(solidify_btn);
+
+        let solid = false;
+        solidify_btn.onclick = e => {
+            if(this.#info_section_handler) {
+                if(!solid) {
+                    this.#info_section_handler.solidify_sections();
+                    solid = true;
+                } else {
+                    this.#info_section_handler.unsolidify_sections();
+                    solid = false;
+                }
+            }
+        }
 
         open_popup_btn.onclick = () => {
             info_section_popup.classList.toggle('open');
-        }
 
-        // Create options.
-        Info_Section_Handler.section_classes.forEach(curr_class => {
-            const option = document.createElement('option');
-            option.textContent = curr_class.INFO_TYPE;
-            section_selector.append(option);
-        });
+            section_selector.innerHTML = '';
+            Info_Section_Handler.section_classes.forEach(curr_class => {
+                const option = document.createElement('option');
+                option.textContent = curr_class.INFO_TYPE;
+                section_selector.append(option);
+            });
+        }
 
         add_info_btn.addEventListener('click', e => {
             if(this.#info_section_handler) {
